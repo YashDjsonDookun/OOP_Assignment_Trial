@@ -1,6 +1,6 @@
-import java.time.LocalDateTime; // import the LocalDateTime Class
+//import java.time.LocalDateTime; // import the LocalDateTime Class
 import java.time.LocalDate; // import the LocalDate Class
-import java.time.format.DateTimeFormatter; // import the DateTimeFormatter Class
+//import java.time.format.DateTimeFormatter; // import the DateTimeFormatter Class
 import java.util.Scanner;
 
 class Patient{
@@ -10,8 +10,8 @@ class Patient{
 	private String email;
 	private String conditions;
 	private String treatments;
-	private LocalDateTime todayDateTime;
-	private DateTimeFormatter formattedTodayDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	//private LocalDateTime todayDateTime;
+	//private DateTimeFormatter formattedTodayDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 	private String assignedDoctor;
 	private LocalDate dateOfBirth;
 	private Gender gender;
@@ -204,6 +204,7 @@ class Patient{
 			newPatient.setSelfHarm_violence(null);
 		}
 
+		input.close();
 		return newPatient;
 	}
 
