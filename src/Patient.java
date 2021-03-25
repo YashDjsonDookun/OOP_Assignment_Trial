@@ -211,7 +211,7 @@ class Patient extends ConnectDatabase {
 		}
 
 		System.out.println("\n************************************************************");
-		System.out.println("* REGISTRATION SUMMARY");
+		System.out.println("* REGISTRATION SUMMARY:");
 		System.out.println("************************************************************");
 		System.out.println("* First Name                      : "+ patient.getFirstName());
 		System.out.println("* Last Name                       : "+ patient.getLastName());
