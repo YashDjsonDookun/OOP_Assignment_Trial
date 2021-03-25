@@ -2,16 +2,18 @@ import java.time.LocalDateTime; // import the LocalDateTime Class
 import java.time.LocalDate; // import the LocalDate Class
 import java.time.format.DateTimeFormatter; // import the DateTimeFormatter Class
 import java.util.Scanner;
+import java.sql.*;
 
-class Patient{
+class Patient extends ConnectDatabase {
 	private String firstName;
 	private String lastName;
 	private int pid;
 	private String email;
 	private String conditions;
 	private String treatments;
-	private LocalDateTime todayDateTime;
-	private DateTimeFormatter formattedTodayDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	// private LocalDateTime todayDateTime = LocalDateTime.now();
+	// private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	// private String formattedTodayDateTime = todayDateTime.format(dateTimeFormatter);
 	private String assignedDoctor;
 	private LocalDate dateOfBirth;
 	private Gender gender;
@@ -43,14 +45,6 @@ class Patient{
 	public String getTreatments() {
 		return treatments;
 	}
-
-//	public LocalDateTime getTodayDateTime() {
-//		return todayDateTime;
-//	}
-//
-//	public DateTimeFormatter getFormattedTodayDateTime() {
-//		return formattedTodayDateTime;
-//	}
 
 	public String getAssignedDoctor() {
 		return assignedDoctor;
@@ -101,14 +95,6 @@ class Patient{
 		this.treatments = treatments;
 	}
 
-//	public void setTodayDateTime(LocalDateTime todayDateTime) {
-//		this.todayDateTime = todayDateTime;
-//	}
-//
-//	public void setFormattedTodayDateTime(DateTimeFormatter formattedTodayDateTime) {
-//		this.formattedTodayDateTime = formattedTodayDateTime;
-//	}
-
 	public void setAssignedDoctor(String assignedDoctor) {
 		this.assignedDoctor = assignedDoctor;
 	}
@@ -149,8 +135,6 @@ class Patient{
 		System.out.print("LastName: ");
 		String lastName = input.nextLine();
 		newPatient.setLastName(lastName);
-
-		newPatient.setPid(1810111);
 
 		System.out.print("DOB, format YYYY-MM-DD : ");
 		String dateOfBirth = input.nextLine();
@@ -203,13 +187,29 @@ class Patient{
 		else {
 			newPatient.setSelfHarm_violence(null);
 		}
-
 		input.close();
+
+		AddPatientInDB(newPatient);
 		return newPatient;
 	}
 
 	/*** PATIENT REGISTRATION SUMMARY ***/
 	static void PatientSummary(Patient patient) {
+
+		String query = "SELECT pid FROM `Patients` WHERE `DOB` ='" + patient.getDateOfBirth() + "' AND `firstName` = '" + patient.getFirstName() + "' AND `lastName` = '" + patient.getLastName() + "';";
+		try {
+			ResultSet rs;
+			Statement st = conn.createStatement();
+			rs = st.executeQuery(query);
+			while (rs.next()){
+				patient.setPid(rs.getInt(1));
+			}
+		}
+		catch (SQLException e){
+			System.err.println("ERROR!!");
+      		System.err.println(e.getMessage());
+		}
+
 		System.out.println("\n************************************************************");
 		System.out.println("* REGISTRATION SUMMARY");
 		System.out.println("************************************************************");
@@ -225,7 +225,44 @@ class Patient{
 		System.out.println("* Conditions                      : "+ patient.getConditions());
 		System.out.println("* Treatments                      : "+ patient.getTreatments());
 		System.out.println("* History of Self-Harm/Violence?  : "+ patient.getSelfHarm_violence());
+		System.out.println("* Date Registered                 : "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
 		System.out.println("************************************************************\n");
+	}
+
+	/*** ADD NEW PATIENT IN DATABASE ***/
+	static void AddPatientInDB(Patient patient){
+		try {
+			System.out.println("\nInserting new Patient into DB...");
+
+			String query = "Insert into Patients (firstName, LastName, email, Address, DOB, phoneNumber, gender, assignedDoctor, conditions, treatments, selfHarm_violence, dateRegistered)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";;
+			
+			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			preparedStmt.setString(1, patient.getFirstName());
+			preparedStmt.setString(2, patient.getLastName());
+			preparedStmt.setString(3, patient.getEmail());
+			preparedStmt.setString(4, patient.getAddress());
+			preparedStmt.setString(5, ""+ patient.getDateOfBirth());
+			preparedStmt.setInt(6, patient.getPhoneNumber());
+			preparedStmt.setString(7, ""+ patient.getGender());
+			preparedStmt.setString(8, patient.getAssignedDoctor());
+			preparedStmt.setString(9, patient.getConditions());
+			preparedStmt.setString(10, patient.getTreatments());
+			preparedStmt.setString(11, ""+ patient.getSelfHarm_violence());
+
+			LocalDateTime todayDateTime = LocalDateTime.now();
+			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+			String formattedTodayDateTime = todayDateTime.format(dateTimeFormatter);
+			preparedStmt.setString(12, ""+ formattedTodayDateTime);
+
+			preparedStmt.execute();
+			System.out.println("\nPatient Registration Successful!");
+
+			PatientSummary(patient);
+		}
+		catch (Exception e){
+			System.err.println("ERROR!!");
+      		System.err.println(e.getMessage());
+		}
 	}
 }
 

@@ -1,7 +1,8 @@
 public class Main{
 	public static void main(String[] args){
-		Patient patient;
-		patient = Patient.RegisterPatient();
-		Patient.PatientSummary(patient);
+		ConnectDatabase Db = new ConnectDatabase();
+		Db.DB_Connect();
+		Patient patient = new Patient();
+		patient.RegisterPatient();
 	}
 }
