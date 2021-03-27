@@ -1,5 +1,3 @@
-package src;
-
 import java.time.LocalDateTime; // import the LocalDateTime Class
 import java.time.LocalDate; // import the LocalDate Class
 import java.time.format.DateTimeFormatter; // import the DateTimeFormatter Class
