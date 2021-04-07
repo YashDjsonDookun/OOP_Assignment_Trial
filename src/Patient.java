@@ -4,38 +4,19 @@ import java.time.format.DateTimeFormatter; // import the DateTimeFormatter Class
 import java.util.Scanner;
 import java.sql.*;
 
-class Patient extends ConnectDatabase {
-	private String firstName;
-	private String lastName;
+class Patient extends Person{
 	private int pid;
-	private String email;
 	private String conditions;
 	private String treatments;
 	// private LocalDateTime todayDateTime = LocalDateTime.now();
 	// private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 	// private String formattedTodayDateTime = todayDateTime.format(dateTimeFormatter);
 	private String assignedDoctor;
-	private LocalDate dateOfBirth;
-	private Gender gender;
-	private String address;
-	private int phoneNumber;
 	private SelfHarm_Violence selfHarm_violence;
 
 	/** GETTERS **/
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
 	public int getPid() {
 		return pid;
-	}
-
-	public String getEmail() {
-		return email;
 	}
 
 	public String getConditions() {
@@ -50,41 +31,13 @@ class Patient extends ConnectDatabase {
 		return assignedDoctor;
 	}
 
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public int getPhoneNumber() {
-		return phoneNumber;
-	}
-
 	public SelfHarm_Violence getSelfHarm_violence() {
 		return selfHarm_violence;
 	}
 
 	/** SETTERS **/
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public void setPid(int pid) {
 		this.pid = pid;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public void setConditions(String conditions) {
@@ -97,22 +50,6 @@ class Patient extends ConnectDatabase {
 
 	public void setAssignedDoctor(String assignedDoctor) {
 		this.assignedDoctor = assignedDoctor;
-	}
-
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setPhoneNumber(int phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 
 	public void setSelfHarm_violence(SelfHarm_Violence selfHarm_violence) {
@@ -199,7 +136,7 @@ class Patient extends ConnectDatabase {
 		String query = "SELECT pid FROM `Patients` WHERE `DOB` ='" + patient.getDateOfBirth() + "' AND `firstName` = '" + patient.getFirstName() + "' AND `lastName` = '" + patient.getLastName() + "';";
 		try {
 			ResultSet rs;
-			Statement st = conn.createStatement();
+			Statement st = ConnectDatabase.conn.createStatement();
 			rs = st.executeQuery(query);
 			while (rs.next()){
 				patient.setPid(rs.getInt(1));
@@ -236,7 +173,7 @@ class Patient extends ConnectDatabase {
 
 			String query = "Insert into Patients (firstName, LastName, email, Address, DOB, phoneNumber, gender, assignedDoctor, conditions, treatments, selfHarm_violence, dateRegistered)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";;
 
-			PreparedStatement preparedStmt = conn.prepareStatement(query);
+			PreparedStatement preparedStmt = ConnectDatabase.conn.prepareStatement(query);
 			preparedStmt.setString(1, patient.getFirstName());
 			preparedStmt.setString(2, patient.getLastName());
 			preparedStmt.setString(3, patient.getEmail());
