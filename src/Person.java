@@ -8,7 +8,7 @@ class Person {
 	private Gender gender;
 	private String address;
 	private int phoneNumber;
-	
+
 	/** GETTERS **/
 	public String getFirstName() {
 		return firstName;
@@ -17,11 +17,11 @@ class Person {
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -29,7 +29,7 @@ class Person {
 	public Gender getGender() {
 		return gender;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -37,7 +37,7 @@ class Person {
 	public int getPhoneNumber() {
 		return phoneNumber;
 	}
-	
+
 	/** SETTERS **/
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -46,11 +46,11 @@ class Person {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
