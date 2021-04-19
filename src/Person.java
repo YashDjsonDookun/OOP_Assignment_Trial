@@ -1,5 +1,4 @@
 import java.time.LocalDate;
-
 class Person {
 	private String firstName;
 	private String lastName;
