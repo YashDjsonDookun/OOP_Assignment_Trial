@@ -132,7 +132,6 @@ class Patient extends Person{
 
 	/*** PATIENT REGISTRATION SUMMARY ***/
 	static void PatientSummary(Patient patient) {
-
 		String query = "SELECT pid FROM `Patients` WHERE `DOB` ='" + patient.getDateOfBirth() + "' AND `firstName` = '" + patient.getFirstName() + "' AND `lastName` = '" + patient.getLastName() + "';";
 		try {
 			ResultSet rs;
