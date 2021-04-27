@@ -77,47 +77,7 @@ public class GUI_EntryPoint {
 		//btnDoctor
 		btnDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					String input_DocID = JOptionPane.showInputDialog(frame,"Enter Your DoctorID:");
-					
-					try{
-						int input_DocID_int = Integer.parseInt(input_DocID);
-						Boolean notFoundFlag = false;
-						try {
-							// Query String
-							String query = "SELECT doctorId FROM `doctors`";
-							// Open Connection to Database
-							ConnectDatabase.DB_Connect();
-							ResultSet rs;
-							Statement st = ConnectDatabase.conn.createStatement();
-							rs = st.executeQuery(query);
-							// Validate DoctorID
-							while(rs.next()) {
-								if (input_DocID_int == rs.getInt(1)) {
-							    	  notFoundFlag = !notFoundFlag;
-							    	  // Open new Window
-							    	  new GUI_SystemInterface(input_DocID_int);
-							    	  // Close Database Connection
-							    	  ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
-							    	  //Close this window
-							    	  frame.dispose();
-							    	  break;
-							      }	
-							}
-							//If doctorID not Found in Database
-							if(!notFoundFlag) {
-								// Close Database Connection
-								ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
-								IdNotFound(frame);
-							}
-						}
-						catch (SQLException e) {
-							System.err.println("ERROR!\n"+e.getMessage());
-						}
-					}
-					catch (Exception e) {
-						// Invalid ID input
-						InvalidID(frame);
-					}
+					Doctor(frame);
 				}
 			});
 		//btnMedicReceptionist
@@ -127,6 +87,52 @@ public class GUI_EntryPoint {
 				}
 			});
 	}
+	
+	/* DOCTOR */
+	void Doctor(JFrame frame) {
+		String input_DocID = JOptionPane.showInputDialog(frame,"Enter Your DoctorID:");
+		
+		try{
+			int input_DocID_int = Integer.parseInt(input_DocID);
+			Boolean notFoundFlag = false;
+			try {
+				// Query String
+				String query = "SELECT doctorId FROM `doctors`";
+				// Open Connection to Database
+				ConnectDatabase.DB_Connect();
+				ResultSet rs;
+				Statement st = ConnectDatabase.conn.createStatement();
+				rs = st.executeQuery(query);
+				// Validate DoctorID
+				while(rs.next()) {
+					if (input_DocID_int == rs.getInt(1)) {
+				    	  notFoundFlag = !notFoundFlag;
+				    	  // Open new Window
+				    	  new GUI_SystemInterface(input_DocID_int);
+				    	  // Close Database Connection
+				    	  ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
+				    	  //Close this window
+				    	  frame.dispose();
+				    	  break;
+				      }	
+				}
+				//If doctorID not Found in Database
+				if(!notFoundFlag) {
+					// Close Database Connection
+					ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
+					IdNotFound(frame);
+				}
+			}
+			catch (SQLException e) {
+				System.err.println("ERROR!\n"+e.getMessage());
+			}
+		}
+		catch (Exception e) {
+			// Invalid ID input
+			InvalidID(frame);
+		}
+	}
+	
 	/* Oops Message */
 	void OopsMessage(JFrame frame) {
 		JOptionPane.showMessageDialog(frame,"Work in Progress...\nThis System is currently only for Doctors. Thank You!","Oops!", JOptionPane.WARNING_MESSAGE);
