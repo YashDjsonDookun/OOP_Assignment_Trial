@@ -71,14 +71,14 @@ public class GUI_EntryPoint {
 					OopsMessage(frame);
 				}
 			});
-		
+		//btnDoctor
 		btnDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 					String input_DocID = JOptionPane.showInputDialog(frame,"Enter Your DoctorID:");
 					
 				}
 			});
-		
+		//btnMedicReceptionist
 		btnMedicReceptionist.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 					OopsMessage(frame);
