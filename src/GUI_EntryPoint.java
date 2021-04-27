@@ -43,7 +43,9 @@ public class GUI_EntryPoint {
 		lbl_MentcareSystem.setFont(new Font("Arial", Font.BOLD, 30));
 		lbl_MentcareSystem.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		/* lbl_useSystemAs Properties */	
+		/*
+		 * lbl_useSystemAs Properties
+		 */	
 		lbl_useSystemAs.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_useSystemAs.setFont(new Font("Arial", Font.PLAIN, 20));
 		
