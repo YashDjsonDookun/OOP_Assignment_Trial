@@ -11,7 +11,11 @@ public class GUI_SystemInterface {
 		
 		/*
 		 * Frame Properties
-		 */
+		 */	
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+//		frame.setResizable(false);
+		frame.setVisible(true);
 		
 		/*
 		 * Create Components
