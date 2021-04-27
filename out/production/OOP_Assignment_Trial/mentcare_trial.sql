@@ -1,8 +1,8 @@
--- MariaDB dump 10.19  Distrib 10.4.18-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.17  Distrib 10.4.13-MariaDB, for Win64 (AMD64)
 --
 -- Host: localhost    Database: mentcare_trial
 -- ------------------------------------------------------
--- Server version	10.4.18-MariaDB
+-- Server version	10.4.13-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,13 +16,129 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `Patients`
+-- Table structure for table `administrators`
 --
 
-DROP TABLE IF EXISTS `Patients`;
+DROP TABLE IF EXISTS `administrators`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Patients` (
+CREATE TABLE `administrators` (
+  `adminID` int(11) NOT NULL,
+  `firstName` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `lastName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `DOB` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `gender` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `phoneNumber` int(8) NOT NULL,
+  `clearance_level` int(1) NOT NULL,
+  PRIMARY KEY (`adminID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `administrators`
+--
+
+LOCK TABLES `administrators` WRITE;
+/*!40000 ALTER TABLE `administrators` DISABLE KEYS */;
+/*!40000 ALTER TABLE `administrators` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `conditions`
+--
+
+DROP TABLE IF EXISTS `conditions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `conditions` (
+  `conditionID` int(11) NOT NULL AUTO_INCREMENT,
+  `condition_text` int(11) NOT NULL,
+  `treatmentID` int(11) NOT NULL,
+  PRIMARY KEY (`conditionID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `conditions`
+--
+
+LOCK TABLES `conditions` WRITE;
+/*!40000 ALTER TABLE `conditions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `conditions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `doctors`
+--
+
+DROP TABLE IF EXISTS `doctors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `doctors` (
+  `doctorID` int(11) NOT NULL,
+  `firstName` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `lastName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `DOB` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `gender` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `phoneNumber` int(8) NOT NULL,
+  `category` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `clearance_level` int(1) NOT NULL,
+  PRIMARY KEY (`doctorID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `doctors`
+--
+
+LOCK TABLES `doctors` WRITE;
+/*!40000 ALTER TABLE `doctors` DISABLE KEYS */;
+INSERT INTO `doctors` VALUES (1810111,'Will','Kingsbury','wkingsbury3@oaic.gov.au','2020-11-13','MALE','633, Ridge Oak Road, Burghill',4942281,'TEAM_DOCTOR, QUALIFIED_DOCTOR',2),(3030303,'Allison','Ammer','aammert@google.com.au','2020-09-20','FEMALE','9 1st Plaza',58421697,'HOSPITAL_DOCTOR, CONSULTANT',0),(9696969,'Junie','Cashmore','jcashmore2n@ehow.com','2020-10-09','FEMALE','08539 Prentice Crossing',4421085,'GENERAL_PRACTITIONER',1);
+/*!40000 ALTER TABLE `doctors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `medicalreceptionists`
+--
+
+DROP TABLE IF EXISTS `medicalreceptionists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `medicalreceptionists` (
+  `medicReceptionistID` int(11) NOT NULL,
+  `firstName` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
+  `lastName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `DOB` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `gender` varchar(6) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `phoneNumber` int(8) NOT NULL,
+  `clearance_level` tinyint(1) NOT NULL,
+  PRIMARY KEY (`medicReceptionistID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `medicalreceptionists`
+--
+
+LOCK TABLES `medicalreceptionists` WRITE;
+/*!40000 ALTER TABLE `medicalreceptionists` DISABLE KEYS */;
+/*!40000 ALTER TABLE `medicalreceptionists` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `patients`
+--
+
+DROP TABLE IF EXISTS `patients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `patients` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(25) COLLATE utf8_unicode_ci NOT NULL,
   `lastName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -36,18 +152,43 @@ CREATE TABLE `Patients` (
   `treatments` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `selfHarm_Violence` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
   `dateRegistered` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
+  `lastConsulation` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
+  `vip` tinyint(1) NOT NULL,
+  `classified` tinyint(1) NOT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Patients`
+-- Dumping data for table `patients`
 --
 
-LOCK TABLES `Patients` WRITE;
-/*!40000 ALTER TABLE `Patients` DISABLE KEYS */;
-INSERT INTO `Patients` VALUES (1,'Yash Djson','Dookun','yash.dookun@email.com','Ave, Swami Vivekananda, Clairfonds No.3, Vacoas','1999-01-11',57522027,'MALE','Rick Sanchez','Brain Damage, Weight Loss','NONE','NO','25-03-2021 11:05:51'),(2,'Ervin','Howell','Shanna@melissa.tv','Victor Plains, Suite 987, Wisokyburgh','1997-09-11',51234567,'MALE','Deckow Crist','Diabetes','Insuline Shots','NO','25-03-2021 11:35:18'),(3,'Patricia','Lebsack','Julianne.OConner@kory.org','Hoeger Mall, Apt. 692, South Elvis','2000-08-07',51234567,'FEMALE','Robel Corkery','Deep Cut','Stiches','YES','25-03-2021 11:41:04'),(4,'Glenna','Reichert','Chaim_McDermott@dana.io','Dayna Park, Suite 449, Bartholomebury','1978-06-08',51254584,'FEMALE','Kattie Turnpike','GSW (Gun Shot Wound) to the chest','NONE','NO','25-03-2021 11:44:21'),(7,'Chelsey','Dietrich','Lucio_Hettinger@annie.ca','Skiles Walks, Suite 351, Roscoeview','1995-07-08',56325458,'FEMALE','Demarco Keebler','Mild Fever','NONE','NO','25-03-2021 11:52:41'),(8,'Nicholas','Runolfsdottir','Sherwood@rosamond.me','Ellsworth Summit, Suite 729, Aliyaview','1990-04-16',58645692,'MALE','jacynthe Abernathy','3rd Degree Burns','Plastic Surgery','NO','25-03-2021 13:04:13'),(9,'Dennis','Schulist','Karley_Dach@jasper.info','Norberto Crossing, Apt. 950, South Christy','1989-05-23',52530215,'FEMALE','Considine Lockman','-','-','NO','25-03-2021 13:06:09'),(10,'Clementine','Bauch','Nathan@yesenia.net','Douglas Extension, Suite 847, McKenziehaven','1992-12-05',59590415,'FEMALE','Samantha Jacobson','Hormonal Disbalance','NONE','NO','25-03-2021 13:11:20'),(11,'Karianne','Corkery','kale@Romaguera.com','8, Shoshone Alley, Tennessee','1993-07-29',56968654,'FEMALE','Mariana Joly','-','-','YES','25-03-2021 14:31:18'),(12,'Adolf','Hitler','adolf@hitler.com','Führerbunker, Berlin, Germany','1889-04-20',57777777,'MALE','Nazi Braun','Asphyxia','NONE','YES','27-03-2021 10:39:15');
-/*!40000 ALTER TABLE `Patients` ENABLE KEYS */;
+LOCK TABLES `patients` WRITE;
+/*!40000 ALTER TABLE `patients` DISABLE KEYS */;
+/*!40000 ALTER TABLE `patients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `treatments`
+--
+
+DROP TABLE IF EXISTS `treatments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `treatments` (
+  `treatmentID` int(11) NOT NULL AUTO_INCREMENT,
+  `treatment` int(11) NOT NULL,
+  PRIMARY KEY (`treatmentID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `treatments`
+--
+
+LOCK TABLES `treatments` WRITE;
+/*!40000 ALTER TABLE `treatments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `treatments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -59,4 +200,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-27 10:46:42
+-- Dump completed on 2021-04-27 21:57:16
