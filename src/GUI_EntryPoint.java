@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.*;
 
 public class GUI_EntryPoint {
 	public GUI_EntryPoint() {
@@ -8,7 +9,7 @@ public class GUI_EntryPoint {
 		 * Create Frame
 		 */
 		JFrame frame = new JFrame();
-		
+
 		/*
 		 * Frame Properties
 		 */
@@ -78,6 +79,43 @@ public class GUI_EntryPoint {
 			public void actionPerformed(ActionEvent arg0) {
 					String input_DocID = JOptionPane.showInputDialog(frame,"Enter Your DoctorID:");
 					
+					try{
+						int input_DocID_int = Integer.parseInt(input_DocID);
+						Boolean notFoundFlag = false;
+						try {
+							// Query String
+							String query = "SELECT doctorId FROM `doctors`";
+							// Open Connection to Database
+							ConnectDatabase.DB_Connect();
+							ResultSet rs;
+							Statement st = ConnectDatabase.conn.createStatement();
+							rs = st.executeQuery(query);
+							// Validate DoctorID
+							while(rs.next()) {
+								if (input_DocID_int == rs.getInt(1)) {
+							    	  notFoundFlag = !notFoundFlag;
+							    	  new GUI_SystemInterface(input_DocID_int);
+							    	  // Close Database Connection
+							    	  ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
+							    	  frame.dispose();
+							    	  break;
+							      }	
+							}
+							//If doctorID not Found in Database
+							if(!notFoundFlag) {
+								// Close Database Connection
+								ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
+								IdNotFound(frame);
+							}
+						}
+						catch (SQLException e) {
+							System.err.println("ERROR!\n"+e.getMessage());
+						}
+					}
+					catch (Exception e) {
+						// Invalid ID input
+						InvalidID(frame);
+					}
 				}
 			});
 		//btnMedicReceptionist
@@ -87,9 +125,18 @@ public class GUI_EntryPoint {
 				}
 			});
 	}
+	/* Oops Message */
 	void OopsMessage(JFrame frame) {
 		JOptionPane.showMessageDialog(frame,"Work in Progress...\nThis System is currently only for Doctors. Thank You!","Oops!", JOptionPane.WARNING_MESSAGE);
 	}
 	
+	/* IdNotFound Message */
+	void IdNotFound(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"Doctor ID Not Found!\nPlease Try Again","ID Not Found!", JOptionPane.ERROR_MESSAGE);
+	}
 	
+	/* Invalid Message */
+	void InvalidID(JFrame frame) {
+		JOptionPane.showMessageDialog(frame,"Invalid ID\nID should only contain numbers!","Error!", JOptionPane.ERROR_MESSAGE);
+	}
 }

@@ -27,4 +27,17 @@ public class ConnectDatabase{
 			System.exit(0);
 		}
 	}
+	
+	public static void DB_Close_Connection(Connection conn, ResultSet rs, Statement st) {
+		try {
+			conn.close();
+			st.close();
+			st.close();
+			msg = "Database Connection: Closed!";
+			System.out.println(msg+"\n");
+		}
+		catch(SQLException e) {
+			
+		}
+	}
 }
