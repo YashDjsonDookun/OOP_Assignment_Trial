@@ -94,9 +94,11 @@ public class GUI_EntryPoint {
 							while(rs.next()) {
 								if (input_DocID_int == rs.getInt(1)) {
 							    	  notFoundFlag = !notFoundFlag;
+							    	  // Open new Window
 							    	  new GUI_SystemInterface(input_DocID_int);
 							    	  // Close Database Connection
 							    	  ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
+							    	  //Close this window
 							    	  frame.dispose();
 							    	  break;
 							      }	
