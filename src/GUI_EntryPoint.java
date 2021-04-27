@@ -4,10 +4,14 @@ import javax.swing.*;
 
 public class GUI_EntryPoint {
 	public GUI_EntryPoint() {
-		/* Create Frame */
+		/*
+		 * Create Frame
+		 */
 		JFrame frame = new JFrame();
 		
-		/* Frame Properties */
+		/*
+		 * Frame Properties
+		 */
 		frame.setTitle("Mentcare System");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		frame.setVisible(true);
@@ -15,21 +19,27 @@ public class GUI_EntryPoint {
 		frame.setMinimumSize(new Dimension(664, 508));
 		frame.getContentPane().setLayout(new GridLayout(5, 1, 0, 15));
 		
-		/* Create Components */
+		/*
+		 * Create Components
+		 */
 		JLabel lbl_MentcareSystem = new JLabel("MENTCARE SYSTEM");
 		JLabel lbl_useSystemAs = new JLabel("Use System As:");
 		JButton btnAdministrator = new JButton("Administrator");
 		JButton btnDoctor = new JButton("Doctor");
 		JButton btnMedicReceptionist = new JButton("Medical Receptionist");
 		
-		/* Add Components To Frame */
+		/*
+		 * Add Components To Frame
+		 */
 		Component[] entryPointComponents = {lbl_MentcareSystem,lbl_useSystemAs, btnAdministrator, btnDoctor, btnMedicReceptionist};
 		
 		for (int i = 0; i < entryPointComponents.length; i++) {
 			frame.getContentPane().add(entryPointComponents[i]);
 		}
 		
-		/* lbl_MentcareSystem Properties */
+		/*
+		 * lbl_MentcareSystem Properties
+		 */
 		lbl_MentcareSystem.setFont(new Font("Arial", Font.BOLD, 30));
 		lbl_MentcareSystem.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -37,17 +47,24 @@ public class GUI_EntryPoint {
 		lbl_useSystemAs.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_useSystemAs.setFont(new Font("Arial", Font.PLAIN, 20));
 		
-		/* btnAdministrator Properties */
+		/*
+		 * btnAdministrator Properties 
+		 */
 		btnAdministrator.setFont(new Font("Arial", Font.BOLD, 23));
 		
-		/* btnDoctor Properties */
+		/*
+		 * btnDoctor Properties
+		 */
 		btnDoctor.setFont(new Font("Arial", Font.BOLD, 23));
 			
-		/* btnMedicReceptionist Properties */
+		/*
+		 * btnMedicReceptionist Properties
+		 */
 		btnMedicReceptionist.setFont(new Font("Arial", Font.BOLD, 23));
 		
-		/* Functionality */
-		
+		/*
+		 * Functionality
+		 */
 		//btnAdministrator
 		btnAdministrator.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
