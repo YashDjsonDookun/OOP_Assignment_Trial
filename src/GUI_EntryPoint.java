@@ -77,7 +77,7 @@ public class GUI_EntryPoint {
 		//btnDoctor
 		btnDoctor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					Doctor(frame);
+					OpenDoctor(frame);
 				}
 			});
 		//btnMedicReceptionist
@@ -89,7 +89,7 @@ public class GUI_EntryPoint {
 	}
 	
 	/* DOCTOR */
-	void Doctor(JFrame frame) {
+	void OpenDoctor(JFrame frame) {
 		String input_DocID = JOptionPane.showInputDialog(frame,"Enter Your DoctorID:");
 		
 		try{
