@@ -97,7 +97,7 @@ public class GUI_EntryPoint {
 			Boolean notFoundFlag = false;
 			try {
 				// Query String
-				String query = "SELECT doctorId FROM `doctors` WHERE doctorID='" + input_DocID + "';";
+				String query = "SELECT doctorId FROM `doctors` WHERE doctorID='" + input_DocID_int + "';";
 				// Open Connection to Database
 				ConnectDatabase.DB_Connect();
 				ResultSet rs;
@@ -107,12 +107,12 @@ public class GUI_EntryPoint {
 				while(rs.next()) {
 					if (rs.getInt(1)>0) {
 				    	  notFoundFlag = !notFoundFlag;
-				    	  // Open new Window
-				    	  new GUI_SystemInterface(input_DocID_int);
-				    	  // Close Database Connection
-				    	  ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 				    	  //Close this window
 				    	  frame.dispose();
+				    	  // Open new Window
+				    	  new GUI_SystemInterface(input_DocID);
+				    	  // Close Database Connection
+				    	  ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 				    	  break;
 				      }
 				}
@@ -127,7 +127,7 @@ public class GUI_EntryPoint {
 				System.err.println("ERROR!\n"+e.getMessage());
 			}
 		}
-		catch (Exception e) {
+		catch (NumberFormatException e) {
 			// Invalid ID input
 			InvalidID(frame);
 		}

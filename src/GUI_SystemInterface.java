@@ -2,14 +2,12 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class GUI_SystemInterface {
-	private JTextField txtDoctorFirstName;
-	private JTextField txt_DoctorID;
-	private JTextField txtDoctorLastName;
-	private JTextField txt_Category;
-	private JTextField txt_ClearanceLevel;
 	
-	public GUI_SystemInterface(int getDoctorID_Parameter) {
+	public GUI_SystemInterface(String getDoctorID_Parameter) {
 		/*
 		 * Create Frame
 		 */
@@ -23,6 +21,7 @@ public class GUI_SystemInterface {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frame.setMinimumSize(new Dimension(900, 808));
 		
 		/*
 		 * Create Components
@@ -31,8 +30,14 @@ public class GUI_SystemInterface {
 		JPanel Panel_DoctorInfo = new JPanel();
 		
 		JLabel lbl_TitleLabel = new JLabel("Mentcare System");
-		JLabel lbl_DoctorInfo = new JLabel("     Doctor:         ");
-		JLabel lbl_Date = new JLabel("        Date:     ");
+		JLabel lbl_DoctorInfo = new JLabel("     Doctor Info:         ");
+		JLabel lbl_Date = new JLabel("        Date:  "+LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+"     ");
+		
+		JTextField txt_DoctorID = new JTextField();
+		JTextField txtDoctorFirstName = new JTextField();
+		JTextField txtDoctorLastName = new JTextField();
+		JTextField txt_Category = new JTextField();
+		JTextField txt_ClearanceLevel = new JTextField();
 		
 		/*
 		 * Add Components To Frame
@@ -68,6 +73,8 @@ public class GUI_SystemInterface {
 		/*
 		 * Components Properties 
 		 */
+		AssignDoctorInfo(getDoctorID_Parameter, txt_DoctorID, txtDoctorFirstName, txtDoctorLastName, txt_Category, txt_ClearanceLevel);
+		
 		// lbl_TitleLabel
 		lbl_TitleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 		lbl_TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);		
@@ -80,35 +87,51 @@ public class GUI_SystemInterface {
 		lbl_Date.setFont(new Font("Arial", Font.PLAIN, 19));
 
 		// txt_DoctorID
-		txt_DoctorID = new JTextField();
 		txt_DoctorID.setEditable(false);
 		txt_DoctorID.setColumns(10);
 		
 		// txtDoctorFirstName
-		txtDoctorFirstName = new JTextField();
 		txtDoctorFirstName.setEditable(false);
 		txtDoctorFirstName.setColumns(10);
 		
 		// txtDoctorLastName
-		txtDoctorLastName = new JTextField();
 		txtDoctorLastName.setEditable(false);
 		txtDoctorLastName.setColumns(10);
 		
 		// txt_Category
-		txt_Category = new JTextField();
 		txt_Category.setEditable(false);
-		txt_Category.setEnabled(false);
 		txt_Category.setColumns(10);
 		
 		// txt_ClearanceLevel
-		txt_ClearanceLevel = new JTextField();
 		txt_ClearanceLevel.setEditable(false);
-		txt_ClearanceLevel.setEnabled(false);
 		txt_ClearanceLevel.setColumns(10);
 	
 		/*
 		 * Functionality
 		 */
+		
 
+	}
+	
+	void AssignDoctorInfo(String docID_Parameter, JTextField docID, JTextField docFirstName, JTextField docLastName, JTextField docCategory, JTextField docClearance_Level) {
+		try {
+			// Query String
+			String query = "SELECT firstName, lastName, category, clearance_level FROM doctors WHERE doctorID='" + docID_Parameter +"';";
+			// Open Connection to Database
+			ConnectDatabase.DB_Connect();
+			ResultSet rs;
+			Statement st = ConnectDatabase.conn.createStatement();
+			rs = st.executeQuery(query);
+			while (rs.next()) {
+				docID.setText("DOCTOR_ID                           :           " + docID_Parameter);
+				docFirstName.setText("First Name                              :           " + rs.getString(1));
+				docLastName.setText("Last Name                              :           " + rs.getString(2));
+				docCategory.setText("CATEGORY                             :           " + rs.getString(3));
+				docClearance_Level.setText("CLEARANCE LEVEL             :           " + String.valueOf(rs.getInt(4)));
+			}
+		}
+		catch (SQLException e) {
+			System.err.println(e);
+		}
 	}
 }
