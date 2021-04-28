@@ -1,17 +1,10 @@
-import java.time.LocalDateTime; // import the LocalDateTime Class
 import java.time.LocalDate; // import the LocalDate Class
-import java.time.format.DateTimeFormatter; // import the DateTimeFormatter Class
-import java.util.Scanner;
-
 import java.sql.*;
 
 class Patient extends Person{
 	private int pid;
 	private String conditions;
 	private String treatments;
-	// private LocalDateTime todayDateTime = LocalDateTime.now();
-	// private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-	// private String formattedTodayDateTime = todayDateTime.format(dateTimeFormatter);
 	private String assignedDoctor;
 	private SelfHarm_Violence selfHarm_violence;
 	private Vip vip;
@@ -152,39 +145,6 @@ class Patient extends Person{
 			System.err.println("ERROR!!");
       		System.err.println(e.getMessage());
 		}
-
-		SummaryText(patient);
-	}
-	
-	/* PATIENT SUMMARY */
-	static void PatientSummary(int id) {
-		Patient patient = new Patient();
-		String query = "SELECT * FROM `Patients` WHERE `pid` ='" + id + "';";
-		SummaryText(patient);
-	}
-	
-	/* SUMMARY TEXT */
-	static void SummaryText(Patient patient) {
-		System.out.println("\n************************************************************");
-		System.out.println("* REGISTRATION SUMMARY:");
-		System.out.println("************************************************************");
-		System.out.println("* First Name                      : "+ patient.getFirstName());
-		System.out.println("* Last Name                       : "+ patient.getLastName());
-		System.out.println("* Patient ID                      : "+ patient.getPid());
-		System.out.println("* DOB                             : "+ patient.getDateOfBirth());
-		System.out.println("* Email                           : "+ patient.getEmail());
-		System.out.println("* Address                         : "+ patient.getAddress());
-		System.out.println("* Phone Number                    : "+ patient.getPhoneNumber());
-		System.out.println("* Gender                          : "+ patient.getGender());
-		System.out.println("* Assigned Doctor                 : "+ patient.getAssignedDoctor());
-		System.out.println("* Conditions                      : "+ patient.getConditions());
-		System.out.println("* Treatments                      : "+ patient.getTreatments());
-		System.out.println("* History of Self-Harm/Violence?  : "+ patient.getSelfHarm_violence());
-		System.out.println("* VIP                             : "+ patient.getVip());
-		System.out.println("* CLASSIFIED                      : "+ patient.getClassified());
-		System.out.println("* Date Registered                 : "+ patient.getDateRegistered());
-		System.out.println("* Last Consultation               : "+ patient.getLastConsultation());
-		System.out.println("************************************************************\n");
 	}
 
 	/*** ADD NEW PATIENT IN DATABASE ***/
@@ -216,7 +176,6 @@ class Patient extends Person{
 			preparedStmt.execute();
 			System.out.println("\nPatient Registration Successful!");
 
-			PatientSummaryRegistration(patient);
 		}
 		catch (Exception e){
 			System.err.println("ERROR!!");

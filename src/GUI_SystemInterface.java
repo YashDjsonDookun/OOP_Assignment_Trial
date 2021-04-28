@@ -340,7 +340,7 @@ public class GUI_SystemInterface {
 		 */
 		btnCreatePatient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CreatePatient(txt_InputPatientFirstName,txt_InputPatientLastName, txt_InputPatientEmail, txt_InputPatientAddress, txt_InputPatientDOB, txt_InputPatientPhoneNumber,comboBox_Gender_Options, txt_InputPatientAssignedDoc, txt_InputPatientConditions, txt_InputPatientTreatments, comboBox_SelfHarm_Options, comboBox_VIP_Classified_Options);
+				CreatePatient(frame, txt_InputPatientFirstName,txt_InputPatientLastName, txt_InputPatientEmail, txt_InputPatientAddress, txt_InputPatientDOB, txt_InputPatientPhoneNumber,comboBox_Gender_Options, txt_InputPatientAssignedDoc, txt_InputPatientConditions, txt_InputPatientTreatments, comboBox_SelfHarm_Options, comboBox_VIP_Classified_Options);
 			}
 		});
 		
@@ -369,8 +369,26 @@ public class GUI_SystemInterface {
 		}
 	}
 	
-	void CreatePatient(JTextField firstName, JTextField lastName, JTextField email, JTextField address, JTextField DOB,JTextField phoneNumber, JComboBox gender, JTextField assignedDoc, JTextArea conditions, JTextArea treatments, JComboBox selfharm_violence, JComboBox vip_classified) {
+	void CreatePatient(JFrame frame, JTextField firstName, JTextField lastName, JTextField email, JTextField address, JTextField DOB,JTextField phoneNumber, JComboBox gender, JTextField assignedDoc, JTextArea conditions, JTextArea treatments, JComboBox selfharm_violence, JComboBox vip_classified) {
 		String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-		Patient.RegisterPatient(firstName.getText(), lastName.getText(), email.getText(), address.getText(), DOB.getText(), phoneNumber.getText(), gender.getSelectedItem().toString(), assignedDoc.getText(), conditions.getText(), treatments.getText(), selfharm_violence.getSelectedItem().toString(), vip_classified.getSelectedItem().toString(), currentDateTime);
+		try {
+			Patient.RegisterPatient(firstName.getText(), lastName.getText(), email.getText(), address.getText(), DOB.getText(), phoneNumber.getText(), gender.getSelectedItem().toString(), assignedDoc.getText(), conditions.getText(), treatments.getText(), selfharm_violence.getSelectedItem().toString(), vip_classified.getSelectedItem().toString(), currentDateTime);
+			firstName.setText("");
+			lastName.setText("");
+			email.setText("");
+			address.setText("");
+			DOB.setText("");
+			phoneNumber.setText("");
+			gender.setSelectedIndex(-1);
+			conditions.setText("");
+			treatments.setText("");
+			selfharm_violence.setSelectedIndex(-1);
+			vip_classified.setSelectedIndex(-1);
+			JOptionPane.showMessageDialog(frame, "Patient Created!", "ALERT",JOptionPane.INFORMATION_MESSAGE);
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(frame, "Something Went Wrong Somewhere...","ERROR!!",JOptionPane.ERROR);
+		}
+		
 	}
 }
