@@ -97,15 +97,15 @@ public class GUI_EntryPoint {
 			Boolean notFoundFlag = false;
 			try {
 				// Query String
-				String query = "SELECT doctorId FROM `doctors`";
+				String query = "SELECT doctorId FROM `doctors` WHERE doctorID='" + input_DocID + "';";
 				// Open Connection to Database
 				ConnectDatabase.DB_Connect();
 				ResultSet rs;
 				Statement st = ConnectDatabase.conn.createStatement();
 				rs = st.executeQuery(query);
-				// Validate DoctorID
+				// if DoctorID in Database
 				while(rs.next()) {
-					if (input_DocID_int == rs.getInt(1)) {
+					if (rs.getInt(1)>0) {
 				    	  notFoundFlag = !notFoundFlag;
 				    	  // Open new Window
 				    	  new GUI_SystemInterface(input_DocID_int);
@@ -114,7 +114,7 @@ public class GUI_EntryPoint {
 				    	  //Close this window
 				    	  frame.dispose();
 				    	  break;
-				      }	
+				      }
 				}
 				//If doctorID not Found in Database
 				if(!notFoundFlag) {
@@ -140,7 +140,7 @@ public class GUI_EntryPoint {
 	
 	/* IdNotFound Message */
 	void IdNotFound(JFrame frame) {
-		JOptionPane.showMessageDialog(frame,"Doctor ID Not Found!\nPlease Try Again","ID Not Found!", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(frame,"Doctor ID Not Found in Doctor's Database.!\nPlease Try Again","ID Not Found!", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	/* Invalid Message */
