@@ -170,7 +170,7 @@ class Patient extends Person{
 		try {
 			System.out.println("\nInserting new Patient into DB...");
 
-			String query = "Insert into Patients (firstName, LastName, email, Address, DOB, phoneNumber, gender, assignedDoctor, conditions, treatments, selfHarm_violence, dateRegistered)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";;
+			String query = "Insert into Patients (firstName, LastName, email, Address, DOB, phoneNumber, gender, assignedDoctor, conditions, treatments, selfHarm_violence, dateRegistered)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement preparedStmt = ConnectDatabase.conn.prepareStatement(query);
 			preparedStmt.setString(1, patient.getFirstName());

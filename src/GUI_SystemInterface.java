@@ -38,13 +38,16 @@ public class GUI_SystemInterface {
 		Panel Panel_InputPatientAssignedDoc = new Panel();
 		Panel Panel_InputPatientDOB = new Panel();
 		Panel Panel_InputPatientGender = new Panel();
+		Panel Panel_InputPatientConditions = new Panel();
+		Panel Panel_InputPatientTreatments = new Panel();
+		Panel Panel_InputPatientSelfHarm = new Panel();
+		Panel Panel_InputPatientVIP_Classified = new Panel();
 		
 		JLabel lbl_TitleLabel = new JLabel("Mentcare System");
 		JLabel lbl_DoctorInfo = new JLabel("     Doctor Info:         ");
 		JLabel lbl_Date = new JLabel("        Date:  "+LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+"     ");
 		JLabel lblNewLabel = new JLabel("");
-		JLabel lbl_Create_Patient = new JLabel("     Create New Patient     ");
-		JLabel lblNewLabel_1 = new JLabel("");
+		JLabel lbl_Create_Patient = new JLabel("     Create New Patient:     ");
 		JLabel lbl_InputPatientFirstName = new JLabel("First Name:");
 		JLabel lbl_InputPatientLastName = new JLabel("Last Name:");
 		JLabel lbl_InputPatientEmail = new JLabel("Email:");
@@ -52,6 +55,10 @@ public class GUI_SystemInterface {
 		JLabel lbl_InputPatientAddress_1 = new JLabel("DOB (Format: YYYY-MM-DD):");
 		JLabel lbl_InputPatientGender = new JLabel("Gender:");
 		JLabel lbl_InputPatientAssignedDoc = new JLabel("Assigned Doctor:");
+		JLabel lbl_InputPatientConditions = new JLabel("Conditions:");
+		JLabel lbl_InputPatientTreatments = new JLabel("Treatments:");
+		JLabel lbl_InputPatientGender_1 = new JLabel("History of SelfHarm/Violence? ");
+		JLabel lbl_InputPatientVIP_Classified = new JLabel("VIP/CLASSIFIED:   ");
 		
 		JTextField txt_DoctorID = new JTextField();
 		JTextField txtDoctorFirstName = new JTextField();
@@ -62,8 +69,11 @@ public class GUI_SystemInterface {
 		JTextField txt_InputPatientLastName = new JTextField();
 		JTextField txt_InputPatientEmail = new JTextField();
 		JTextField txt_InputPatientAddress = new JTextField();
-		JTextField txt_InputPatientDOB = new JTextField();
 		JTextField txt_InputPatientAssignedDoc = new JTextField();
+		JTextField txt_InputPatientDOB = new JTextField();
+		
+		JTextArea txt_InputPatientConditions = new JTextArea();
+		JTextArea txt_InputPatientTreatments = new JTextArea();
 		
 		FlowLayout fl_Panel_InputPatientFirstName = (FlowLayout) Panel_InputPatientFirstName.getLayout();
 		FlowLayout flowLayout_1 = (FlowLayout) Panel_InputPatientLastName.getLayout();
@@ -71,8 +81,17 @@ public class GUI_SystemInterface {
 		FlowLayout flowLayout_2 = (FlowLayout) Panel_InputPatientDOB.getLayout();
 		FlowLayout flowLayout_3 = (FlowLayout) Panel_InputPatientGender.getLayout();
 		FlowLayout flowLayout_4 = (FlowLayout) Panel_InputPatientAssignedDoc.getLayout();
+		FlowLayout flowLayout_5 = (FlowLayout) Panel_InputPatientConditions.getLayout();
+		FlowLayout flowLayout_8 = (FlowLayout) Panel_InputPatientAddress.getLayout();
+		FlowLayout flowLayout_6 = (FlowLayout) Panel_InputPatientTreatments.getLayout();
+		FlowLayout flowLayout_7 = (FlowLayout) Panel_InputPatientSelfHarm.getLayout();
+		FlowLayout fl_Panel_InputPatientVIP_Classified = (FlowLayout) Panel_InputPatientVIP_Classified.getLayout();
 			
-		JComboBox comboBox_Gender_Options = new JComboBox();
+		JComboBox<String>comboBox_Gender_Options = new JComboBox<String>();
+		JComboBox<String> comboBox_SelfHarm_Options = new JComboBox<String>();
+		JComboBox<String> comboBox_VIP_Classified_Options = new JComboBox<String>();
+		
+		JButton btnCreatePatient = new JButton("Create Patient");
 		
 		/*
 		 * Add Components To Frame
@@ -90,7 +109,7 @@ public class GUI_SystemInterface {
 		Panel_DoctorInfo.setLayout(new GridLayout(5, 0, 0, 2));
 		
 
-		Panel_CreatePatient.setLayout(new GridLayout(19, 0, 5, 5));
+		Panel_CreatePatient.setLayout(new GridLayout(15, 0, 5, 5));
 		
 		/*
 		 * Add Components To Panels
@@ -111,7 +130,6 @@ public class GUI_SystemInterface {
 
 		Panel_CreatePatient.add(lblNewLabel);
 		Panel_CreatePatient.add(lbl_Create_Patient);
-		Panel_CreatePatient.add(lblNewLabel_1);
 		Panel_CreatePatient.add(Panel_InputPatientFirstName);
 		Panel_CreatePatient.add(Panel_InputPatientLastName);
 		Panel_CreatePatient.add(Panel_InputPatientEmail);
@@ -119,6 +137,11 @@ public class GUI_SystemInterface {
 		Panel_CreatePatient.add(Panel_InputPatientDOB);
 		Panel_CreatePatient.add(Panel_InputPatientGender);
 		Panel_CreatePatient.add(Panel_InputPatientAssignedDoc);
+		Panel_CreatePatient.add(Panel_InputPatientConditions);
+		Panel_CreatePatient.add(Panel_InputPatientTreatments);
+		Panel_CreatePatient.add(Panel_InputPatientSelfHarm);
+		Panel_CreatePatient.add(Panel_InputPatientVIP_Classified);
+		Panel_CreatePatient.add(btnCreatePatient);
 		
 		Panel_InputPatientFirstName.add(lbl_InputPatientFirstName);
 		Panel_InputPatientFirstName.add(txt_InputPatientFirstName);
@@ -132,8 +155,8 @@ public class GUI_SystemInterface {
 		Panel_InputPatientAddress.add(lbl_InputPatientAddress);
 		Panel_InputPatientAddress.add(txt_InputPatientAddress);
 		
-		Panel_InputPatientDOB.add(txt_InputPatientDOB);
 		Panel_InputPatientDOB.add(lbl_InputPatientAddress_1);
+		Panel_InputPatientDOB.add(txt_InputPatientDOB);
 		
 		Panel_InputPatientGender.add(lbl_InputPatientGender);
 		Panel_InputPatientGender.add(comboBox_Gender_Options);
@@ -141,10 +164,22 @@ public class GUI_SystemInterface {
 		Panel_InputPatientAssignedDoc.add(lbl_InputPatientAssignedDoc);
 		Panel_InputPatientAssignedDoc.add(txt_InputPatientAssignedDoc);
 		
+		Panel_InputPatientConditions.add(lbl_InputPatientConditions);
+		Panel_InputPatientConditions.add(txt_InputPatientConditions);
+		
+		Panel_InputPatientTreatments.add(lbl_InputPatientTreatments);
+		Panel_InputPatientTreatments.add(txt_InputPatientTreatments);
+		
+		Panel_InputPatientSelfHarm.add(lbl_InputPatientGender_1);
+		Panel_InputPatientSelfHarm.add(comboBox_SelfHarm_Options);
+		
+		Panel_InputPatientVIP_Classified.add(lbl_InputPatientVIP_Classified);
+		Panel_InputPatientVIP_Classified.add(comboBox_VIP_Classified_Options);
+			
 		/*
 		 * Components Properties 
 		 */
-		AssignDoctorInfo(getDoctorID_Parameter, txt_DoctorID, txtDoctorFirstName, txtDoctorLastName, txt_Category, txt_ClearanceLevel);
+		AssignDoctorInfo(getDoctorID_Parameter, txt_InputPatientAssignedDoc,txt_DoctorID, txtDoctorFirstName, txtDoctorLastName, txt_Category, txt_ClearanceLevel);
 		
 		lbl_TitleLabel.setFont(new Font("Arial", Font.BOLD, 24));
 		lbl_TitleLabel.setHorizontalAlignment(SwingConstants.CENTER);		
@@ -171,11 +206,13 @@ public class GUI_SystemInterface {
 		
 		lbl_Create_Patient.setFont(new Font("Arial", Font.BOLD, 20));
 		lbl_Create_Patient.setVerticalAlignment(SwingConstants.TOP);
+		lbl_Create_Patient.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		lblNewLabel.setVerticalAlignment(SwingConstants.TOP);
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.TOP);
 		
 		fl_Panel_InputPatientFirstName.setAlignment(FlowLayout.LEFT);
+		
+		flowLayout_8.setAlignment(FlowLayout.LEFT);
 	
 		txt_InputPatientFirstName.setFont(new Font("Arial", Font.PLAIN, 16));
 		txt_InputPatientFirstName.setColumns(25);
@@ -208,11 +245,10 @@ public class GUI_SystemInterface {
 		
 		lbl_InputPatientAddress_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_InputPatientAddress_1.setFont(new Font("Arial", Font.PLAIN, 17));
-		
-		
 		lbl_InputPatientAddress_1.setLabelFor(txt_InputPatientDOB);
+		
 		txt_InputPatientDOB.setFont(new Font("Arial", Font.PLAIN, 16));
-		txt_InputPatientDOB.setColumns(10);
+		txt_InputPatientDOB.setColumns(7);
 		
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		
@@ -230,15 +266,47 @@ public class GUI_SystemInterface {
 		txt_InputPatientAssignedDoc.setFont(new Font("Arial", Font.PLAIN, 16));
 		txt_InputPatientAssignedDoc.setColumns(11);
 		
+		lbl_InputPatientConditions.setLabelFor(txt_InputPatientAssignedDoc);
+		lbl_InputPatientConditions.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_InputPatientConditions.setFont(new Font("Arial", Font.PLAIN, 17));
+		
+		txt_InputPatientConditions.setWrapStyleWord(true);
+		txt_InputPatientConditions.setRows(1);
+		txt_InputPatientConditions.setColumns(50);
+		
+		flowLayout_6.setAlignment(FlowLayout.LEFT);
+		
+		lbl_InputPatientTreatments.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_InputPatientTreatments.setFont(new Font("Arial", Font.PLAIN, 17));
+		
+		txt_InputPatientTreatments.setWrapStyleWord(true);
+		txt_InputPatientTreatments.setRows(1);
+		txt_InputPatientTreatments.setColumns(50);
+		
+		flowLayout_7.setAlignment(FlowLayout.LEFT);
+		
+		lbl_InputPatientGender_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_InputPatientGender_1.setFont(new Font("Arial", Font.PLAIN, 17));
+		
+		comboBox_SelfHarm_Options.setModel(new DefaultComboBoxModel(SelfHarm_Violence.values()));
+		
+		fl_Panel_InputPatientVIP_Classified.setAlignment(FlowLayout.LEFT);
+		
+		lbl_InputPatientVIP_Classified.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_InputPatientVIP_Classified.setFont(new Font("Arial", Font.PLAIN, 17));
+		
+		comboBox_VIP_Classified_Options.setModel(new DefaultComboBoxModel<String>(new String[] {"N/A", "VIP", "CLASSIFIED"}));
+		
+		btnCreatePatient.setFont(new Font("Arial", Font.PLAIN, 16));
+		
 		
 		/*
 		 * Functionality
 		 */
 		
-
 	}
 	
-	void AssignDoctorInfo(String docID_Parameter, JTextField docID, JTextField docFirstName, JTextField docLastName, JTextField docCategory, JTextField docClearance_Level) {
+	void AssignDoctorInfo(String docID_Parameter, JTextField txt_InputPatientAssignedDoc ,JTextField docID, JTextField docFirstName, JTextField docLastName, JTextField docCategory, JTextField docClearance_Level) {
 		try {
 			// Query String
 			String query = "SELECT firstName, lastName, category, clearance_level FROM doctors WHERE doctorID='" + docID_Parameter +"';";
@@ -253,6 +321,7 @@ public class GUI_SystemInterface {
 				docLastName.setText("Last Name                              :           " + rs.getString(2));
 				docCategory.setText("CATEGORY                             :           " + rs.getString(3));
 				docClearance_Level.setText("CLEARANCE LEVEL             :           " + String.valueOf(rs.getInt(4)));
+				txt_InputPatientAssignedDoc.setText("Dr. " + rs.getString(2) + ", " + rs.getString(1));
 			}
 		}
 		catch (SQLException e) {
