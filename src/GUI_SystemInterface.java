@@ -334,7 +334,6 @@ public class GUI_SystemInterface {
 		
 		btnCreatePatient.setFont(new Font("Arial", Font.PLAIN, 16));
 		
-		
 		/*
 		 * Functionality
 		 */
