@@ -5,7 +5,6 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 public class GUI_SystemInterface {
 	private JTextField txt_SearchFirstName;
 	private JTextField textField_1;
