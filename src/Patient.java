@@ -50,39 +50,39 @@ class Patient extends Person{
 	}
 
 	/** SETTERS **/
-	public void setPid(int pid) {
+	protected void setPid(int pid) {
 		this.pid = pid;
 	}
 
-	public void setConditions(String conditions) {
+	protected void setConditions(String conditions) {
 		this.conditions = conditions;
 	}
 
-	public void setTreatments(String treatments) {
+	protected void setTreatments(String treatments) {
 		this.treatments = treatments;
 	}
 
-	public void setAssignedDoctor(String assignedDoctor) {
+	protected void setAssignedDoctor(String assignedDoctor) {
 		this.assignedDoctor = assignedDoctor;
 	}
 
-	public void setSelfHarm_violence(SelfHarm_Violence selfHarm_violence) {
+	protected void setSelfHarm_violence(SelfHarm_Violence selfHarm_violence) {
 		this.selfHarm_violence = selfHarm_violence;
 	}
 	
-	public void setVip(Vip vip) {
+	protected void setVip(Vip vip) {
 		this.vip = vip;
 	}
 	
-	public void setClassified(Classified classified) {
+	protected void setClassified(Classified classified) {
 		this.classified = classified;
 	}
 	
-	public void setDateRegistered(String dateRegisterd) {
+	protected void setDateRegistered(String dateRegisterd) {
 		this.dateRegistered = dateRegisterd;
 	}
 	
-	public void setLastConsultation(String lastConsultation) {
+	protected void setLastConsultation(String lastConsultation) {
 		this.lastConsultation = lastConsultation;
 	}
 
