@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class GUI_SystemInterface {
@@ -369,17 +370,7 @@ public class GUI_SystemInterface {
 	}
 	
 	void CreatePatient(JTextField firstName, JTextField lastName, JTextField email, JTextField address, JTextField DOB,JTextField phoneNumber, JComboBox gender, JTextField assignedDoc, JTextArea conditions, JTextArea treatments, JComboBox selfharm_violence, JComboBox vip_classified) {
-		System.out.println(firstName.getText());
-		System.out.println(lastName.getText());
-		System.out.println(email.getText());
-		System.out.println(address.getText());
-		System.out.println(DOB.getText());
-		System.out.println(phoneNumber.getText());
-		System.out.println(gender.getSelectedItem());
-		System.out.println(assignedDoc.getText());
-		System.out.println(conditions.getText());
-		System.out.println(treatments.getText());
-		System.out.println(selfharm_violence.getSelectedItem());
-		System.out.println(vip_classified.getSelectedItem());
+		String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+		Patient.RegisterPatient(firstName.getText(), lastName.getText(), email.getText(), address.getText(), DOB.getText(), phoneNumber.getText(), gender.getSelectedItem().toString(), assignedDoc.getText(), conditions.getText(), treatments.getText(), selfharm_violence.getSelectedItem().toString(), vip_classified.getSelectedItem().toString(), currentDateTime);
 	}
 }
