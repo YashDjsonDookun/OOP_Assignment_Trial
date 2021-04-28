@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class GUI_SystemInterface {
+	private JTextField txt_InputPatientPhoneNumber;
 	
 	
 	public GUI_SystemInterface(String getDoctorID_Parameter) {
@@ -71,6 +72,12 @@ public class GUI_SystemInterface {
 		JTextField txt_InputPatientAddress = new JTextField();
 		JTextField txt_InputPatientAssignedDoc = new JTextField();
 		JTextField txt_InputPatientDOB = new JTextField();
+		txt_InputPatientDOB.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) { 
+		        if (txt_InputPatientDOB.getText().length() >= 10 )
+		            e.consume(); 
+		    }  
+		});
 		
 		JTextArea txt_InputPatientConditions = new JTextArea();
 		JTextArea txt_InputPatientTreatments = new JTextArea();
@@ -135,6 +142,32 @@ public class GUI_SystemInterface {
 		Panel_CreatePatient.add(Panel_InputPatientEmail);
 		Panel_CreatePatient.add(Panel_InputPatientAddress);
 		Panel_CreatePatient.add(Panel_InputPatientDOB);
+		
+		Panel Panel_InputPatientPhoneNumber = new Panel();
+		FlowLayout fl_Panel_InputPatientPhoneNumber = (FlowLayout) Panel_InputPatientPhoneNumber.getLayout();
+		fl_Panel_InputPatientPhoneNumber.setAlignment(FlowLayout.LEFT);
+		Panel_CreatePatient.add(Panel_InputPatientPhoneNumber);
+		
+		JLabel lbl_InputPatientAddress_1_1 = new JLabel("Phone Number: ");
+		lbl_InputPatientAddress_1_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_InputPatientAddress_1_1.setFont(new Font("Arial", Font.PLAIN, 17));
+		Panel_InputPatientPhoneNumber.add(lbl_InputPatientAddress_1_1);
+		
+		txt_InputPatientPhoneNumber = new JTextField();
+		lbl_InputPatientAddress_1_1.setLabelFor(txt_InputPatientPhoneNumber);
+		txt_InputPatientPhoneNumber.setFont(new Font("Arial", Font.PLAIN, 16));
+		txt_InputPatientPhoneNumber.setColumns(7);
+		
+		txt_InputPatientPhoneNumber.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) { 
+		        if (txt_InputPatientPhoneNumber.getText().length() >= 8 )
+		            e.consume(); 
+		    }  
+		});
+		
+		
+		
+		Panel_InputPatientPhoneNumber.add(txt_InputPatientPhoneNumber);
 		Panel_CreatePatient.add(Panel_InputPatientGender);
 		Panel_CreatePatient.add(Panel_InputPatientAssignedDoc);
 		Panel_CreatePatient.add(Panel_InputPatientConditions);
@@ -284,6 +317,7 @@ public class GUI_SystemInterface {
 		txt_InputPatientTreatments.setColumns(50);
 		
 		flowLayout_7.setAlignment(FlowLayout.LEFT);
+		flowLayout_5.setAlignment(FlowLayout.LEFT);
 		
 		lbl_InputPatientGender_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lbl_InputPatientGender_1.setFont(new Font("Arial", Font.PLAIN, 17));
@@ -303,6 +337,11 @@ public class GUI_SystemInterface {
 		/*
 		 * Functionality
 		 */
+		btnCreatePatient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreatePatient(txt_InputPatientFirstName,txt_InputPatientLastName, txt_InputPatientEmail, txt_InputPatientAddress, txt_InputPatientDOB, txt_InputPatientPhoneNumber,comboBox_Gender_Options, txt_InputPatientAssignedDoc, txt_InputPatientConditions, txt_InputPatientTreatments, comboBox_SelfHarm_Options, comboBox_VIP_Classified_Options);
+			}
+		});
 		
 	}
 	
@@ -327,5 +366,20 @@ public class GUI_SystemInterface {
 		catch (SQLException e) {
 			System.err.println(e);
 		}
+	}
+	
+	void CreatePatient(JTextField firstName, JTextField lastName, JTextField email, JTextField address, JTextField DOB,JTextField phoneNumber, JComboBox gender, JTextField assignedDoc, JTextArea conditions, JTextArea treatments, JComboBox selfharm_violence, JComboBox vip_classified) {
+		System.out.println(firstName.getText());
+		System.out.println(lastName.getText());
+		System.out.println(email.getText());
+		System.out.println(address.getText());
+		System.out.println(DOB.getText());
+		System.out.println(phoneNumber.getText());
+		System.out.println(gender.getSelectedItem());
+		System.out.println(assignedDoc.getText());
+		System.out.println(conditions.getText());
+		System.out.println(treatments.getText());
+		System.out.println(selfharm_violence.getSelectedItem());
+		System.out.println(vip_classified.getSelectedItem());
 	}
 }

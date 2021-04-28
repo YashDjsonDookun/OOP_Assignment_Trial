@@ -2,6 +2,7 @@ import java.time.LocalDateTime; // import the LocalDateTime Class
 import java.time.LocalDate; // import the LocalDate Class
 import java.time.format.DateTimeFormatter; // import the DateTimeFormatter Class
 import java.util.Scanner;
+
 import java.sql.*;
 
 class Patient extends Person{
@@ -59,72 +60,30 @@ class Patient extends Person{
 	/*** PATIENT REGISTRATION ***/
 	static Patient RegisterPatient(){
 		Patient newPatient = new Patient();
-		Scanner input = new Scanner(System.in);
 
-		System.out.println("\n*********************************************");
-		System.out.println("PATIENT REGISTRATION.. FILL IN DETAILS BELOW");
-		System.out.println("*********************************************");
+//		newPatient.setFirstName(firstName);
 
-		System.out.print("FirstName: ");
-		String firstName = input.nextLine();
-		newPatient.setFirstName(firstName);
 
-		System.out.print("LastName: ");
-		String lastName = input.nextLine();
-		newPatient.setLastName(lastName);
+//		newPatient.setLastName(lastName);
 
-		System.out.print("DOB, format YYYY-MM-DD : ");
-		String dateOfBirth = input.nextLine();
-		newPatient.setDateOfBirth(LocalDate.parse(dateOfBirth));
 
-		System.out.print("Email: ");
-		String email = input.nextLine();
-		newPatient.setEmail(email);
+//		newPatient.setDateOfBirth(LocalDate.parse(dateOfBirth));
 
-		System.out.print("Address: ");
-		String address = input.nextLine();
-		newPatient.setAddress(address);
+//		newPatient.setEmail(email);
 
-		System.out.print("Phone Number: ");
-		String phoneNumber = input.nextLine();
-		newPatient.setPhoneNumber(Integer.parseInt(phoneNumber));
+//		newPatient.setAddress(address);
 
-		System.out.print("Gender {f/F = female; m/M = male}: ");
-		char gender = input.nextLine().charAt(0);
-		if (gender == 'f' || gender == 'F'){
-			newPatient.setGender(Gender.FEMALE);
-		}
-		else if (gender == 'm' || gender == 'M') {
-			newPatient.setGender(Gender.MALE);
-		}
-		else {
-			newPatient.setGender(null);
-		}
+//		newPatient.setPhoneNumber(Integer.parseInt(phoneNumber));
 
-		System.out.print("Assigned Doc: ");
-		String assignedDoctor = input.nextLine();
-		newPatient.setAssignedDoctor(assignedDoctor);
+//			newPatient.setGender(Gender.FEMALE);
 
-		System.out.print("Suffering from: ");
-		String conditions = input.nextLine();
-		newPatient.setConditions(conditions);
+//		newPatient.setAssignedDoctor(assignedDoctor);
 
-		System.out.print("Undergoing Treatments: ");
-		String treatments = input.nextLine();
-		newPatient.setTreatments(treatments);
+//		newPatient.setConditions(conditions);
 
-		System.out.print("History of Self-Harm/Violence?\n {y/Y = Yes; n/N = No}: ");
-		char selfHarm_violence = input.nextLine().charAt(0);
-		if (selfHarm_violence == 'n' || selfHarm_violence == 'N'){
-			newPatient.setSelfHarm_violence(SelfHarm_Violence.NO);
-		}
-		else if (selfHarm_violence == 'y' || selfHarm_violence == 'Y') {
-			newPatient.setSelfHarm_violence(SelfHarm_Violence.YES);
-		}
-		else {
-			newPatient.setSelfHarm_violence(null);
-		}
-		input.close();
+//		newPatient.setTreatments(treatments);
+
+//			newPatient.setSelfHarm_violence(null);
 
 		AddPatientInDB(newPatient);
 		return newPatient;
@@ -170,7 +129,7 @@ class Patient extends Person{
 		try {
 			System.out.println("\nInserting new Patient into DB...");
 
-			String query = "Insert into Patients (firstName, LastName, email, Address, DOB, phoneNumber, gender, assignedDoctor, conditions, treatments, selfHarm_violence, dateRegistered)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String query = "Insert into Patients (firstName, LastName, email, Address, DOB, phoneNumber, gender, assignedDoctor, conditions, treatments, selfHarm_violence, dateRegistered, lastConsultation, vip, classified)" + " values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			PreparedStatement preparedStmt = ConnectDatabase.conn.prepareStatement(query);
 			preparedStmt.setString(1, patient.getFirstName());
