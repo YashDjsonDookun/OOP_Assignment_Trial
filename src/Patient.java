@@ -130,23 +130,6 @@ class Patient extends Person{
 		return newPatient;
 	}
 
-	/*** PATIENT REGISTRATION SUMMARY ***/
-	static void PatientSummaryRegistration(Patient patient) {
-		String query = "SELECT pid FROM `Patients` WHERE `DOB` ='" + patient.getDateOfBirth() + "' AND `firstName` = '" + patient.getFirstName() + "' AND `lastName` = '" + patient.getLastName() + "';";
-		try {
-			ResultSet rs;
-			Statement st = ConnectDatabase.conn.createStatement();
-			rs = st.executeQuery(query);
-			while (rs.next()){
-				patient.setPid(rs.getInt(1));
-			}
-		}
-		catch (SQLException e){
-			System.err.println("ERROR!!");
-      		System.err.println(e.getMessage());
-		}
-	}
-
 	/*** ADD NEW PATIENT IN DATABASE ***/
 	static void AddPatientInDB(Patient patient){
 		try {
