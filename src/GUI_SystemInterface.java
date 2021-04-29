@@ -535,7 +535,10 @@ public class GUI_SystemInterface {
 			rs = st.executeQuery(query);
 			screen.setFont(new Font("Monospaced", Font.PLAIN, 16));
 			while(rs.next()) {
-				if ((rs.getString(15).equals("1") && rs.getString(16).equals("1") && docClearance_Level.getText().toString().equals("2")) || (rs.getString(15).equals("1") && rs.getString(16).equals("0") && docClearance_Level.getText().toString().equals("1")) || (rs.getString(15).equals("0") && rs.getString(16).equals("0"))) {
+				System.out.println("VIP: " + rs.getString(15));
+				System.out.println("Classified: " + rs.getString(15));
+				System.out.println("doc clearance: " + docClearance_Level.getText().toString());
+				if ((rs.getString(15).equals("1") && rs.getString(16).equals("1") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           2")) || (rs.getString(15).equals("1") && rs.getString(16).equals("0") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           1")) || (rs.getString(15).equals("0") && rs.getString(16).equals("0"))) {
 				screen.append(
 						  "\n*********************************************************************\n*                            PATIENT REPORT:                        *\n*********************************************************************"
 						+ "\n*  Patient ID                       :   " + rs.getInt(1)
@@ -556,7 +559,7 @@ public class GUI_SystemInterface {
 						);
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "You Are not Allowed To View Generate A Report For This Patient!", "ALERT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "You Are not Allowed To View/Generate A Report For This Patient!", "ALERT", JOptionPane.ERROR_MESSAGE);
 					screen.setText("");
 					screen.setFont(new Font("Monospaced", Font.PLAIN, 19));
 					generateButton.setEnabled(false);
