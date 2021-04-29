@@ -46,30 +46,6 @@ LOCK TABLES `administrators` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `conditions`
---
-
-DROP TABLE IF EXISTS `conditions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `conditions` (
-  `conditionID` int(11) NOT NULL AUTO_INCREMENT,
-  `condition_text` int(11) NOT NULL,
-  `treatmentID` int(11) NOT NULL,
-  PRIMARY KEY (`conditionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `conditions`
---
-
-LOCK TABLES `conditions` WRITE;
-/*!40000 ALTER TABLE `conditions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `conditions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `doctors`
 --
 
@@ -152,11 +128,11 @@ CREATE TABLE `patients` (
   `treatments` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
   `selfHarm_Violence` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
   `dateRegistered` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
-  `lastConsulation` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
+  `lastConsultation` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
   `vip` tinyint(1) NOT NULL,
   `classified` tinyint(1) NOT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -165,30 +141,8 @@ CREATE TABLE `patients` (
 
 LOCK TABLES `patients` WRITE;
 /*!40000 ALTER TABLE `patients` DISABLE KEYS */;
+INSERT INTO `patients` VALUES (14,'Mickey','Mouse','Mickey@Mouse.com','Miska Moska House, MickeyLand','2011-12-13',99999999,'MALE','Dr. Kingsbury, Will','Fever','Panadol','NO','28-04-2021 21:10:51','28-04-2021 21:10:51',0,0),(15,'Christina','Seale','cseale2w@comsenz.com','6 David, Parkway, Lorianna','1996-02-18',56428479,'FEMALE','Dr. Cashmore, Junie','Brain Damage','NONE','NO','28-04-2021 21:27:27','28-04-2021 21:27:27',0,0),(16,'Sissy','Haddinton','shaddinton3i@mediafire.com','11791 Rieder Circle','1972-11-18',90643681,'MALE','Dr. Kingsbury, Will','Gun Wound','Surgery','YES','28-04-2021 21:34:44','28-04-2021 21:34:44',1,0),(17,'Trever','Hoofe','thoofe3x@bluehost.com','9253 Pleasure Trail','1992-06-22',91009058,'MALE','Dr. Cashmore, Junie','3rd Degree Burn','Surgery','NO','28-04-2021 21:44:07','28-04-2021 21:44:07',1,1),(18,'Alicea','Dorber','adorber62@alibaba.com','819 Lien Trail','1986-10-31',51328652,'FEMALE','Dr. Kingsbury, Will','Stressed','NONE','NO','29-04-2021 09:05:21','29-04-2021 09:05:21',0,0),(19,'Sheila','Agneau','sagneau6h@hubpages.com','5478 Randy Crossing','2020-08-20',59612099,'MALE','Dr. Cashmore, Junie','Rash','Ointment','NO','29-04-2021 09:16:40','29-04-2021 09:16:40',0,0);
 /*!40000 ALTER TABLE `patients` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `treatments`
---
-
-DROP TABLE IF EXISTS `treatments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `treatments` (
-  `treatmentID` int(11) NOT NULL AUTO_INCREMENT,
-  `treatment` int(11) NOT NULL,
-  PRIMARY KEY (`treatmentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `treatments`
---
-
-LOCK TABLES `treatments` WRITE;
-/*!40000 ALTER TABLE `treatments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `treatments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -200,4 +154,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-27 21:57:16
+-- Dump completed on 2021-04-29 14:44:34
