@@ -95,6 +95,7 @@ public class GUI_SystemInterface {
 		JButton btnCreatePatient = new JButton("Create Patient");
 		JButton btnSearchPatient = new JButton("Search Patient");
 		JButton btnGenerateReport = new JButton("Generate Report");
+		JButton btnContactPatient = new JButton("Contact Patient");
 		
 		/*
 		 * Add Components To Frame
@@ -373,7 +374,6 @@ public class GUI_SystemInterface {
 		btnGenerateReport.setFont(new Font("Arial", Font.PLAIN, 16));
 		Panel_SearchPatient.add(btnGenerateReport);
 		
-		JButton btnContactPatient = new JButton("Contact Patient");
 		btnContactPatient.setEnabled(false);
 		btnContactPatient.setFont(new Font("Arial", Font.PLAIN, 16));
 		Panel_SearchPatient.add(btnContactPatient);
@@ -400,6 +400,13 @@ public class GUI_SystemInterface {
 		btnGenerateReport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GenerateReport(txt_SearchPatientID, txt_PatientReport, txt_ClearanceLevel, btnContactPatient, btnGenerateReport);
+			}
+		});
+		
+		// Button Contact Patient
+		btnContactPatient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ContactPatient(frame, txt_SearchPatientID, txt_ClearanceLevel, txt_PatientReport, btnContactPatient, btnGenerateReport);
 			}
 		});
 		
@@ -535,9 +542,6 @@ public class GUI_SystemInterface {
 			rs = st.executeQuery(query);
 			screen.setFont(new Font("Monospaced", Font.PLAIN, 16));
 			while(rs.next()) {
-				System.out.println("VIP: " + rs.getString(15));
-				System.out.println("Classified: " + rs.getString(15));
-				System.out.println("doc clearance: " + docClearance_Level.getText().toString());
 				if ((rs.getString(15).equals("1") && rs.getString(16).equals("1") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           2")) || (rs.getString(15).equals("1") && rs.getString(16).equals("0") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           1")) || (rs.getString(15).equals("0") && rs.getString(16).equals("0"))) {
 				screen.append(
 						  "\n*********************************************************************\n*                            PATIENT REPORT:                        *\n*********************************************************************"
@@ -566,11 +570,49 @@ public class GUI_SystemInterface {
 					contactButton.setEnabled(false);
 					patientID.setText("");
 				}
-			}	
+			}
+			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 		}
 		catch(SQLException e) {
 			System.err.println(e);
 		}
 		screen.setFont(new Font("Monospaced", Font.PLAIN, 19));
+	}
+	
+	void ContactPatient(JFrame frame, JTextField patientID, JTextField docClearance_Level, JTextArea screen, JButton generateButton, JButton contactButton) {
+		String query = "SELECT email, phoneNumber, vip, classified  FROM patients WHERE pid = '" + patientID.getText().toString() + "'";
+		try {
+			ConnectDatabase.DB_Connect();
+			ResultSet rs;
+			Statement st = ConnectDatabase.conn.createStatement();
+			rs = st.executeQuery(query);
+			String[] contactOptions = {"Send Email", "Call"};
+			while(rs.next()) {
+				System.out.println(rs.getString(2));
+				System.out.println(rs.getString(3));
+				System.out.println(docClearance_Level.getText().toString());
+				if ((rs.getString(3).equals("1") && rs.getString(4).equals("1") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           2")) || (rs.getString(3).equals("1") && rs.getString(4).equals("0") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           1")) || (rs.getString(3).equals("0") && rs.getString(4).equals("0"))) {
+					int contactOption = JOptionPane.showOptionDialog(frame, "Contact Patient Via:\n\nEmail--> " + rs.getString(1) + "\nOR\nPhoneNumber--> " + rs.getString(2), "CONTACT PATIENT", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, contactOptions, contactOptions[0]);
+					if(contactOptions.toString().equals("Send Email")) {
+						JOptionPane.showMessageDialog(frame, "Sending Email...");
+					}
+					else {
+						JOptionPane.showMessageDialog(frame, "Calling...");
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You Are not Allowed To Contact This Patient!", "ALERT", JOptionPane.ERROR_MESSAGE);
+					screen.setText("");
+					screen.setFont(new Font("Monospaced", Font.PLAIN, 19));
+					generateButton.setEnabled(false);
+					contactButton.setEnabled(false);
+					patientID.setText("");
+				}
+			}
+			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
+		}
+		catch(SQLException e) {
+			System.err.println(e);
+		}
 	}
 }
