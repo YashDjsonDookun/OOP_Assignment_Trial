@@ -22,7 +22,7 @@ public class GUI_SystemInterface {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		frame.setMinimumSize(new Dimension(1700, 820));
+		frame.setMinimumSize(new Dimension(1850, 820));
 		
 		/*
 		 * Create Components
@@ -72,12 +72,6 @@ public class GUI_SystemInterface {
 		JTextField txt_InputPatientAssignedDoc = new JTextField();
 		JTextField txt_InputPatientDOB = new JTextField();
 		JTextField txt_InputPatientPhoneNumber = new JTextField();
-		txt_InputPatientDOB.addKeyListener(new KeyAdapter() {
-		    public void keyTyped(KeyEvent e) { 
-		        if (txt_InputPatientDOB.getText().length() >= 10 )
-		            e.consume(); 
-		    }  
-		});
 		
 		JTextArea txt_InputPatientConditions = new JTextArea();
 		JTextArea txt_InputPatientTreatments = new JTextArea();
@@ -100,6 +94,7 @@ public class GUI_SystemInterface {
 		
 		JButton btnCreatePatient = new JButton("Create Patient");
 		JButton btnSearchPatient = new JButton("Search Patient");
+		JButton btnGenerateReport = new JButton("Generate Report");
 		
 		/*
 		 * Add Components To Frame
@@ -327,6 +322,13 @@ public class GUI_SystemInterface {
 		
 		btnCreatePatient.setFont(new Font("Arial", Font.PLAIN, 16));
 		
+		txt_InputPatientDOB.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) { 
+		        if (txt_InputPatientDOB.getText().length() >= 10 )
+		            e.consume(); 
+		    }  
+		});
+		
 		JTextArea txt_PatientReport = new JTextArea();
 		txt_PatientReport.setFont(new Font("Monospaced", Font.PLAIN, 19));
 		txt_PatientReport.setBackground(Color.GRAY);
@@ -367,7 +369,6 @@ public class GUI_SystemInterface {
 		btnSearchPatient.setFont(new Font("Arial", Font.PLAIN, 16));
 		Panel_SearchPatient.add(btnSearchPatient);
 		
-		JButton btnGenerateReport = new JButton("Generate Report");
 		btnGenerateReport.setEnabled(false);
 		btnGenerateReport.setFont(new Font("Arial", Font.PLAIN, 16));
 		Panel_SearchPatient.add(btnGenerateReport);
@@ -389,10 +390,16 @@ public class GUI_SystemInterface {
 		});
 		
 		// Button Search Patient
-		
 		btnSearchPatient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				SearchPatient(frame, txt_SearchPatientID, txt_PatientReport);
+				SearchPatient(frame, txt_SearchPatientID, txt_PatientReport, txt_ClearanceLevel, btnGenerateReport, btnContactPatient);
+			}
+		});
+		
+		// Button Generate Report
+		btnGenerateReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GenerateReport(txt_SearchPatientID, txt_PatientReport, txt_ClearanceLevel);
 			}
 		});
 		
@@ -445,8 +452,10 @@ public class GUI_SystemInterface {
 		
 	}
 	
-	void SearchPatient(JFrame frame, JTextField pid, JTextArea screenReport) {
+	void SearchPatient(JFrame frame, JTextField pid, JTextArea screenReport, JTextField docClearance_Level, JButton generateButton, JButton contactButton) {
 		screenReport.setText("");
+		generateButton.setEnabled(false);
+		contactButton.setEnabled(false);
 		try{
 			if (!pid.getText().isBlank()) {
 				Integer.parseInt(pid.getText());
@@ -463,14 +472,32 @@ public class GUI_SystemInterface {
 						if (rs.getString(7).equals("1") && rs.getString(8).equals("1")) {
 							vip = Vip.TRUE.toString();
 							classified = Classified.TRUE.toString();
+							if(docClearance_Level.getText().equals("CLEARANCE LEVEL             :           2")) {
+								generateButton.setEnabled(true);
+								contactButton.setEnabled(true);
+								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified! Be Advised!");
+							}
+							else {
+								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified! Be Advised!\nYou are not Authorized to Generate this Patient's Report or contact him/her!!");
+							}
 						}
 						else if (rs.getString(7).equals("1") && rs.getString(8).equals("0")) {
 							vip = Vip.TRUE.toString();
 							classified = Classified.FALSE.toString();
+							if(docClearance_Level.getText().equals("CLEARANCE LEVEL             :           1") || docClearance_Level.getText().equals("CLEARANCE LEVEL             :           2")) {
+								generateButton.setEnabled(true);
+								contactButton.setEnabled(true);
+								JOptionPane.showMessageDialog(frame,"Patient flagged as VIP! Be Advised!");
+							}
+							else {
+								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified! Be Advised!\nYou are not Authorized to Generate this Patient's Report or contact him/her!!");
+							}
 						}
 						else {
 							vip = Vip.FALSE.toString();
 							classified = Classified.FALSE.toString();
+							generateButton.setEnabled(true);
+							contactButton.setEnabled(true);
 						}
 						screenReport.append(
 								  "**************************************************\n*                  PATIENT INFO:                 *\n**************************************************"
@@ -485,15 +512,52 @@ public class GUI_SystemInterface {
 								+ "\n**************************************************\n"
 								);
 					}
+					// Close Connection to Database
+					ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 				}
 				catch(SQLException e) {
 					System.err.println(e);
 				}
 			}
-			pid.setText("");
 		}
 		catch(Exception e) {
 			GUI_EntryPoint.InvalidID(frame);
 		}
+	}
+	
+	void GenerateReport(JTextField patientID, JTextArea screen, JTextField docClearance_Leve) {
+		String query = "SELECT *  FROM patients WHERE pid = '" + patientID.getText().toString() + "'";
+		screen.setText("");
+		try {
+			ConnectDatabase.DB_Connect();
+			ResultSet rs;
+			Statement st = ConnectDatabase.conn.createStatement();
+			rs = st.executeQuery(query);
+			screen.setFont(new Font("Monospaced", Font.PLAIN, 16));
+			while(rs.next()) {
+				screen.append(
+						  "\n*********************************************************************\n*                            PATIENT REPORT:                        *\n*********************************************************************"
+						+ "\n*  Patient ID                       :   " + rs.getInt(1)
+						+ "\n*  First Name                       :   " + rs.getString(2)
+						+ "\n*  Last Name                        :   " + rs.getString(3)	
+						+ "\n*  Email                            :   " + rs.getString(4)
+						+ "\n*  Address                          :   " + rs.getString(5)
+						+ "\n*  DOB                              :   " + rs.getString(6)
+						+ "\n*  Phone Number                     :   " + rs.getString(7)
+						+ "\n*  Gender                           :   " + rs.getString(8)
+						+ "\n*  Assigned Doctor                  :   " + rs.getString(9)
+						+ "\n*  Conditions                       :   " + rs.getString(10)
+						+ "\n*  Treatments                       :   " + rs.getString(11)
+						+ "\n*  History of Self-Harm/Violence?   :   " + rs.getString(12)
+						+ "\n*  Date Registered                  :   " + rs.getString(14)
+						+ "\n*  Last Consultation                :   " + rs.getString(15)
+						+ "\n*********************************************************************"
+						);
+			}
+		}
+		catch(SQLException e) {
+			System.err.println(e);
+		}
+		screen.setFont(new Font("Monospaced", Font.PLAIN, 19));
 	}
 }
