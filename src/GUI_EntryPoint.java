@@ -144,7 +144,7 @@ public class GUI_EntryPoint {
 	}
 	
 	/* Invalid Message */
-	void InvalidID(JFrame frame) {
+	public static void InvalidID(JFrame frame) {
 		JOptionPane.showMessageDialog(frame,"Invalid ID\nID should only contain numbers!","Error!", JOptionPane.ERROR_MESSAGE);
 	}
 }

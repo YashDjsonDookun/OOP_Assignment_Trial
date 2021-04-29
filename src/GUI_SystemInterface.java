@@ -7,11 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class GUI_SystemInterface {
-	private JTextField txt_SearchFirstName;
-	private JTextField textField_1;
-	private JTextField textField_4;
-	private JTextField textField_2;
-	private JTextField textField;
+	private JTextField txt_SearchPatientID;
 	public GUI_SystemInterface(String getDoctorID_Parameter) {
 		/*
 		 * Create Frame
@@ -26,7 +22,7 @@ public class GUI_SystemInterface {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
-		frame.setMinimumSize(new Dimension(1450, 820));
+		frame.setMinimumSize(new Dimension(1700, 820));
 		
 		/*
 		 * Create Components
@@ -103,6 +99,7 @@ public class GUI_SystemInterface {
 		JComboBox<String> comboBox_VIP_Classified_Options = new JComboBox<String>();
 		
 		JButton btnCreatePatient = new JButton("Create Patient");
+		JButton btnSearchPatient = new JButton("Search Patient");
 		
 		/*
 		 * Add Components To Frame
@@ -331,8 +328,9 @@ public class GUI_SystemInterface {
 		btnCreatePatient.setFont(new Font("Arial", Font.PLAIN, 16));
 		
 		JTextArea txt_PatientReport = new JTextArea();
+		txt_PatientReport.setFont(new Font("Monospaced", Font.PLAIN, 19));
+		txt_PatientReport.setBackground(Color.GRAY);
 		txt_PatientReport.setWrapStyleWord(true);
-		txt_PatientReport.setLineWrap(true);
 		txt_PatientReport.setEditable(false);
 		frame.getContentPane().add(txt_PatientReport, BorderLayout.CENTER);
 		
@@ -351,78 +349,21 @@ public class GUI_SystemInterface {
 		lbl_SearchPatient.setFont(new Font("Arial", Font.BOLD, 20));
 		Panel_SearchPatient.add(lbl_SearchPatient);
 		
-		Panel Panel_InputPatientFirstName_Search = new Panel();
-		FlowLayout flowLayout_9 = (FlowLayout) Panel_InputPatientFirstName_Search.getLayout();
-		flowLayout_9.setAlignment(FlowLayout.RIGHT);
-		Panel_SearchPatient.add(Panel_InputPatientFirstName_Search);
-		
-		JLabel lbl_InputPatientFirstName_1 = new JLabel("First Name:");
-		lbl_InputPatientFirstName_1.setFont(new Font("Arial", Font.PLAIN, 17));
-		Panel_InputPatientFirstName_Search.add(lbl_InputPatientFirstName_1);
-		
-		txt_SearchFirstName = new JTextField();
-		txt_SearchFirstName.setFont(new Font("Arial", Font.PLAIN, 16));
-		txt_SearchFirstName.setColumns(25);
-		Panel_InputPatientFirstName_Search.add(txt_SearchFirstName);
-		
-		Panel Panel_InputPatientLastName_Search = new Panel();
-		FlowLayout flowLayout_10 = (FlowLayout) Panel_InputPatientLastName_Search.getLayout();
-		flowLayout_10.setAlignment(FlowLayout.RIGHT);
-		Panel_SearchPatient.add(Panel_InputPatientLastName_Search);
-		
-		JLabel lbl_InputPatientLastName_1 = new JLabel("Last Name:");
-		lbl_InputPatientLastName_1.setFont(new Font("Arial", Font.PLAIN, 17));
-		Panel_InputPatientLastName_Search.add(lbl_InputPatientLastName_1);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Arial", Font.PLAIN, 16));
-		textField_1.setColumns(25);
-		Panel_InputPatientLastName_Search.add(textField_1);
-		
-		Panel Panel_InputPatientDOB_Search = new Panel();
-		FlowLayout flowLayout_11 = (FlowLayout) Panel_InputPatientDOB_Search.getLayout();
-		flowLayout_11.setAlignment(FlowLayout.LEFT);
-		Panel_SearchPatient.add(Panel_InputPatientDOB_Search);
-		
-		JLabel lbl_InputPatientAddress_1_2 = new JLabel("DOB (Format: YYYY-MM-DD):");
-		lbl_InputPatientAddress_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_InputPatientAddress_1_2.setFont(new Font("Arial", Font.PLAIN, 17));
-		Panel_InputPatientDOB_Search.add(lbl_InputPatientAddress_1_2);
-		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Arial", Font.PLAIN, 16));
-		textField_4.setColumns(7);
-		Panel_InputPatientDOB_Search.add(textField_4);
-		
-		Panel Panel_InputPatientAssignedDoc_Search = new Panel();
-		FlowLayout flowLayout_12 = (FlowLayout) Panel_InputPatientAssignedDoc_Search.getLayout();
-		flowLayout_12.setAlignment(FlowLayout.RIGHT);
-		Panel_SearchPatient.add(Panel_InputPatientAssignedDoc_Search);
-		
-		JLabel lbl_InputPatientLastName_1_1 = new JLabel("Assigned Doctor: ");
-		lbl_InputPatientLastName_1_1.setFont(new Font("Arial", Font.PLAIN, 17));
-		Panel_InputPatientAssignedDoc_Search.add(lbl_InputPatientLastName_1_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Arial", Font.PLAIN, 16));
-		textField_2.setColumns(25);
-		Panel_InputPatientAssignedDoc_Search.add(textField_2);
-		
-		Panel Panel_InputPatientAssignedDoc_Search_1 = new Panel();
-		FlowLayout flowLayout_13 = (FlowLayout) Panel_InputPatientAssignedDoc_Search_1.getLayout();
-		flowLayout_13.setAlignment(FlowLayout.RIGHT);
-		Panel_SearchPatient.add(Panel_InputPatientAssignedDoc_Search_1);
+		Panel Panel_InputPatient_SearchID = new Panel();
+		FlowLayout fl_Panel_InputPatient_SearchID = (FlowLayout) Panel_InputPatient_SearchID.getLayout();
+		fl_Panel_InputPatient_SearchID.setAlignment(FlowLayout.RIGHT);
+		Panel_SearchPatient.add(Panel_InputPatient_SearchID);
 		
 		JLabel lbl_InputPatientID = new JLabel("Patient ID:");
 		lbl_InputPatientID.setFont(new Font("Arial", Font.PLAIN, 17));
-		Panel_InputPatientAssignedDoc_Search_1.add(lbl_InputPatientID);
+		Panel_InputPatient_SearchID.add(lbl_InputPatientID);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Arial", Font.PLAIN, 16));
-		textField.setColumns(25);
-		Panel_InputPatientAssignedDoc_Search_1.add(textField);
+		txt_SearchPatientID = new JTextField();
+		txt_SearchPatientID.setFont(new Font("Arial", Font.PLAIN, 16));
+		txt_SearchPatientID.setColumns(25);
+		Panel_InputPatient_SearchID.add(txt_SearchPatientID);
 		
-		JButton btnSearchPatient = new JButton("Search Patient");
+		
 		btnSearchPatient.setFont(new Font("Arial", Font.PLAIN, 16));
 		Panel_SearchPatient.add(btnSearchPatient);
 		
@@ -439,9 +380,19 @@ public class GUI_SystemInterface {
 		/*
 		 * Functionality
 		 */
+		
+		// Button Create Patient
 		btnCreatePatient.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CreatePatient(frame, txt_InputPatientFirstName,txt_InputPatientLastName, txt_InputPatientEmail, txt_InputPatientAddress, txt_InputPatientDOB, txt_InputPatientPhoneNumber,comboBox_Gender_Options, txt_InputPatientAssignedDoc, txt_InputPatientConditions, txt_InputPatientTreatments, comboBox_SelfHarm_Options, comboBox_VIP_Classified_Options);
+			}
+		});
+		
+		// Button Search Patient
+		
+		btnSearchPatient.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SearchPatient(frame, txt_SearchPatientID, txt_PatientReport);
 			}
 		});
 		
@@ -449,7 +400,6 @@ public class GUI_SystemInterface {
 	
 	void AssignDoctorInfo(String docID_Parameter, JTextField txt_InputPatientAssignedDoc ,JTextField docID, JTextField docFirstName, JTextField docLastName, JTextField docCategory, JTextField docClearance_Level) {
 		try {
-			// Query String
 			String query = "SELECT firstName, lastName, category, clearance_level FROM doctors WHERE doctorID='" + docID_Parameter +"';";
 			// Open Connection to Database
 			ConnectDatabase.DB_Connect();
@@ -464,6 +414,8 @@ public class GUI_SystemInterface {
 				docClearance_Level.setText("CLEARANCE LEVEL             :           " + String.valueOf(rs.getInt(4)));
 				txt_InputPatientAssignedDoc.setText("Dr. " + rs.getString(2) + ", " + rs.getString(1));
 			}
+			// Close Connection to Database
+			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 		}
 		catch (SQLException e) {
 			System.err.println(e);
@@ -491,5 +443,57 @@ public class GUI_SystemInterface {
 			JOptionPane.showMessageDialog(frame, "Something Went Wrong Somewhere...\nPlease check all your fields again","ERROR!!",JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	void SearchPatient(JFrame frame, JTextField pid, JTextArea screenReport) {
+		screenReport.setText("");
+		try{
+			if (!pid.getText().isBlank()) {
+				Integer.parseInt(pid.getText());
+				String query = "SELECT pid, firstName, lastName, DOB, assignedDoctor, dateRegistered, vip, classified FROM patients WHERE pid='" + pid.getText() + "'";
+				try {
+					// Open Connection to Database
+					ConnectDatabase.DB_Connect();
+					ResultSet rs;
+					Statement st = ConnectDatabase.conn.createStatement();
+					rs = st.executeQuery(query);
+					String vip="";
+					String classified="";
+					while(rs.next()) {
+						if (rs.getString(7).equals("1") && rs.getString(8).equals("1")) {
+							vip = Vip.TRUE.toString();
+							classified = Classified.TRUE.toString();
+						}
+						else if (rs.getString(7).equals("1") && rs.getString(8).equals("0")) {
+							vip = Vip.TRUE.toString();
+							classified = Classified.FALSE.toString();
+						}
+						else {
+							vip = Vip.FALSE.toString();
+							classified = Classified.FALSE.toString();
+						}
+						screenReport.append(
+								  "**************************************************\n*                  PATIENT INFO:                 *\n**************************************************"
+								+ "\nPatient ID             :     " + rs.getInt(1)
+								+ "\nFirst Name             :     " + rs.getString(2)
+								+ "\nLast Name              :     " + rs.getString(3)
+								+ "\nDOB                    :     " + rs.getString(4)
+								+ "\nAssigned Doctor        :     " + rs.getString(5)
+								+ "\nDate Registered        :     " + rs.getString(6)
+								+ "\nVIP                    :     " + vip
+								+ "\nClassified Patient     :     " + classified
+								+ "\n**************************************************\n"
+								);
+					}
+				}
+				catch(SQLException e) {
+					System.err.println(e);
+				}
+			}
+			pid.setText("");
+		}
+		catch(Exception e) {
+			GUI_EntryPoint.InvalidID(frame);
+		}
 	}
 }

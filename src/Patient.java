@@ -158,6 +158,7 @@ class Patient extends Person{
 
 			preparedStmt.execute();
 			System.out.println("\nPatient Registration Successful!");
+			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, null, preparedStmt);
 
 		}
 		catch (Exception e){
