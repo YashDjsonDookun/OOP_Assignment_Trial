@@ -1,4 +1,7 @@
 import java.time.LocalDate; // import the LocalDate Class
+
+import javax.swing.JOptionPane;
+
 import java.sql.*;
 
 class Patient extends Person{
@@ -161,9 +164,8 @@ class Patient extends Person{
 			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, null, preparedStmt);
 
 		}
-		catch (Exception e){
-			System.err.println("ERROR!!");
-      		System.err.println(e.getMessage());
+		catch (SQLException e){
+			JOptionPane.showMessageDialog(null, "Patient Registration Failed!");
 		}
 	}
 }

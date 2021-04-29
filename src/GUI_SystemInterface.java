@@ -412,7 +412,7 @@ public class GUI_SystemInterface {
 		
 	}
 	
-	void AssignDoctorInfo(String docID_Parameter, JTextField txt_InputPatientAssignedDoc ,JTextField docID, JTextField docFirstName, JTextField docLastName, JTextField docCategory, JTextField docClearance_Level) {
+	private void AssignDoctorInfo(String docID_Parameter, JTextField txt_InputPatientAssignedDoc ,JTextField docID, JTextField docFirstName, JTextField docLastName, JTextField docCategory, JTextField docClearance_Level) {
 		try {
 			String query = "SELECT firstName, lastName, category, clearance_level FROM doctors WHERE doctorID='" + docID_Parameter +"';";
 			// Open Connection to Database
@@ -432,11 +432,11 @@ public class GUI_SystemInterface {
 			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 		}
 		catch (SQLException e) {
-			System.err.println(e);
+			JOptionPane.showMessageDialog(null, "Oops, Something Happened on a Database Level!");
 		}
 	}
 	
-	void CreatePatient(JFrame frame, JTextField firstName, JTextField lastName, JTextField email, JTextField address, JTextField DOB,JTextField phoneNumber, JComboBox gender, JTextField assignedDoc, JTextArea conditions, JTextArea treatments, JComboBox selfharm_violence, JComboBox vip_classified) {
+	private void CreatePatient(JFrame frame, JTextField firstName, JTextField lastName, JTextField email, JTextField address, JTextField DOB,JTextField phoneNumber, JComboBox gender, JTextField assignedDoc, JTextArea conditions, JTextArea treatments, JComboBox selfharm_violence, JComboBox vip_classified) {
 		String currentDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
 		try {
 			Patient.RegisterPatient(firstName.getText(), lastName.getText(), email.getText(), address.getText(), DOB.getText(), phoneNumber.getText(), gender.getSelectedItem().toString(), assignedDoc.getText(), conditions.getText(), treatments.getText(), selfharm_violence.getSelectedItem().toString(), vip_classified.getSelectedItem().toString(), currentDateTime);
@@ -459,7 +459,7 @@ public class GUI_SystemInterface {
 		
 	}
 	
-	void SearchPatient(JFrame frame, JTextField pid, JTextArea screenReport, JTextField docClearance_Level, JButton generateButton, JButton contactButton) {
+	private void SearchPatient(JFrame frame, JTextField pid, JTextArea screenReport, JTextField docClearance_Level, JButton generateButton, JButton contactButton) {
 		screenReport.setText("");
 		generateButton.setEnabled(false);
 		contactButton.setEnabled(false);
@@ -482,10 +482,10 @@ public class GUI_SystemInterface {
 							if(docClearance_Level.getText().equals("CLEARANCE LEVEL             :           2")) {
 								generateButton.setEnabled(true);
 								contactButton.setEnabled(true);
-								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified! Be Advised!");
+								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified !\nBe Advised!");
 							}
 							else {
-								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified! Be Advised!\nYou are not Authorized to Generate this Patient's Report or contact him/her!!");
+								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified !\nBe Advised, You are not Authorized to Generate this Patient's Report or contact him/her!!");
 							}
 						}
 						else if (rs.getString(7).equals("1") && rs.getString(8).equals("0")) {
@@ -494,10 +494,10 @@ public class GUI_SystemInterface {
 							if(docClearance_Level.getText().equals("CLEARANCE LEVEL             :           1") || docClearance_Level.getText().equals("CLEARANCE LEVEL             :           2")) {
 								generateButton.setEnabled(true);
 								contactButton.setEnabled(true);
-								JOptionPane.showMessageDialog(frame,"Patient flagged as VIP! Be Advised!");
+								JOptionPane.showMessageDialog(frame,"Patient flagged as VIP!\n Be Advised!");
 							}
 							else {
-								JOptionPane.showMessageDialog(frame,"Patient flagged as Classified! Be Advised!\nYou are not Authorized to Generate this Patient's Report or contact him/her!!");
+								JOptionPane.showMessageDialog(frame,"Patient flagged as VIP !\nBe Advised, You are not Authorized to Generate this Patient's Report or contact him/her!!");
 							}
 						}
 						else {
@@ -523,7 +523,7 @@ public class GUI_SystemInterface {
 					ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 				}
 				catch(SQLException e) {
-					System.err.println(e);
+					JOptionPane.showMessageDialog(frame, "Oops, Something Happened on a Database Level! Cannot fetch Patient's Info..");
 				}
 			}
 		}
@@ -532,7 +532,7 @@ public class GUI_SystemInterface {
 		}
 	}
 	
-	void GenerateReport(JTextField patientID, JTextArea screen, JTextField docClearance_Level, JButton generateButton, JButton contactButton) {
+	private void GenerateReport(JTextField patientID, JTextArea screen, JTextField docClearance_Level, JButton generateButton, JButton contactButton) {
 		String query = "SELECT *  FROM patients WHERE pid = '" + patientID.getText().toString() + "'";
 		screen.setText("");
 		try {
@@ -574,12 +574,12 @@ public class GUI_SystemInterface {
 			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 		}
 		catch(SQLException e) {
-			System.err.println(e);
+			JOptionPane.showMessageDialog(null, "Oops, Something Happened on a Database Level!\nCannot fetch Patient Info to Generate Report!");
 		}
 		screen.setFont(new Font("Monospaced", Font.PLAIN, 19));
 	}
 	
-	void ContactPatient(JFrame frame, JTextField patientID, JTextField docClearance_Level, JTextArea screen, JButton generateButton, JButton contactButton) {
+	private void ContactPatient(JFrame frame, JTextField patientID, JTextField docClearance_Level, JTextArea screen, JButton generateButton, JButton contactButton) {
 		String query = "SELECT email, phoneNumber, vip, classified  FROM patients WHERE pid = '" + patientID.getText().toString() + "'";
 		try {
 			ConnectDatabase.DB_Connect();
@@ -588,20 +588,17 @@ public class GUI_SystemInterface {
 			rs = st.executeQuery(query);
 			String[] contactOptions = {"Send Email", "Call"};
 			while(rs.next()) {
-				System.out.println(rs.getString(2));
-				System.out.println(rs.getString(3));
-				System.out.println(docClearance_Level.getText().toString());
 				if ((rs.getString(3).equals("1") && rs.getString(4).equals("1") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           2")) || (rs.getString(3).equals("1") && rs.getString(4).equals("0") && docClearance_Level.getText().toString().equals("CLEARANCE LEVEL             :           1")) || (rs.getString(3).equals("0") && rs.getString(4).equals("0"))) {
-					int contactOption = JOptionPane.showOptionDialog(frame, "Contact Patient Via:\n\nEmail--> " + rs.getString(1) + "\nOR\nPhoneNumber--> " + rs.getString(2), "CONTACT PATIENT", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, contactOptions, contactOptions[0]);
-					if(contactOptions.toString().equals("Send Email")) {
+					int contactOption = JOptionPane.showOptionDialog(frame, "Contact Patient Via:\n\nEmail--> " + rs.getString(1) + "\nOR\nPhoneNumber--> " + rs.getString(2), "CONTACT PATIENT", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, contactOptions, null);
+					if(contactOption==0) {
 						JOptionPane.showMessageDialog(frame, "Sending Email...");
 					}
-					else {
+					else if(contactOption==1) {
 						JOptionPane.showMessageDialog(frame, "Calling...");
 					}
 				}
 				else {
-					JOptionPane.showMessageDialog(null, "You Are not Allowed To Contact This Patient!", "ALERT", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "You Are not Allowed To Contact This Patient!", "ALERT", JOptionPane.ERROR_MESSAGE);
 					screen.setText("");
 					screen.setFont(new Font("Monospaced", Font.PLAIN, 19));
 					generateButton.setEnabled(false);
@@ -612,7 +609,7 @@ public class GUI_SystemInterface {
 			ConnectDatabase.DB_Close_Connection(ConnectDatabase.conn, rs, st);
 		}
 		catch(SQLException e) {
-			System.err.println(e);
+			JOptionPane.showMessageDialog(frame, "Oops, Something Happened on a Database Level! Cannot fetch Patient's contact details!");
 		}
 	}
 }

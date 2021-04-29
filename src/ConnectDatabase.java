@@ -1,5 +1,7 @@
 import java.sql.*;
 
+import javax.swing.JOptionPane;
+
 public class ConnectDatabase{
 	//Set Database Credentials
 	private static final String URL = "jdbc:mysql://localhost/mentcare_trial";
@@ -15,15 +17,10 @@ public class ConnectDatabase{
 			// Establish Connection
 			System.out.println("Connecting to database...");
 			conn = DriverManager.getConnection(URL,DB_USERNAME,DB_PASSWORD);
-			// Print message to show successful Connection
-			msg = "Database Connection: Established Successfully";
-			System.out.println(msg+"\n");
 		}
 		catch (SQLException e){
 			// Print Error Message
-			System.err.print("Unexpected Failure!!\nCould not establish connection to DataBase...\n");
-			System.err.println("Please check whether the Localhost server was Activated!");
-			System.err.println("Error Message: " + e);
+			JOptionPane.showMessageDialog(null, "Oops, Unable to Establish Connection with Database.");
 			System.exit(0);
 		}
 	}
@@ -33,11 +30,9 @@ public class ConnectDatabase{
 			conn.close();
 			st.close();
 			st.close();
-			msg = "Database Connection: Closed!";
-			System.out.println(msg+"\n");
 		}
 		catch(SQLException e) {
-			
+			JOptionPane.showMessageDialog(null, "Oops! Unable to Close Database Connection...");
 		}
 	}
 }

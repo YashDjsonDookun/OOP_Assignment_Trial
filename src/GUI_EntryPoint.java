@@ -124,7 +124,7 @@ public class GUI_EntryPoint {
 				}
 			}
 			catch (SQLException e) {
-				System.err.println("ERROR!\n"+e.getMessage());
+				JOptionPane.showMessageDialog(frame, "Oops, Cannot communticate with Database (Table `doctors`)");
 			}
 		}
 		catch (NumberFormatException e) {
