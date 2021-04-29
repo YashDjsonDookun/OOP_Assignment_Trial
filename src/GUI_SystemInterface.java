@@ -399,7 +399,7 @@ public class GUI_SystemInterface {
 		// Button Generate Report
 		btnGenerateReport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GenerateReport(txt_SearchPatientID, txt_PatientReport, txt_ClearanceLevel);
+				GenerateReport(txt_SearchPatientID, txt_PatientReport, txt_ClearanceLevel, btnContactPatient, btnGenerateReport);
 			}
 		});
 		
@@ -525,7 +525,7 @@ public class GUI_SystemInterface {
 		}
 	}
 	
-	void GenerateReport(JTextField patientID, JTextArea screen, JTextField docClearance_Leve) {
+	void GenerateReport(JTextField patientID, JTextArea screen, JTextField docClearance_Level, JButton generateButton, JButton contactButton) {
 		String query = "SELECT *  FROM patients WHERE pid = '" + patientID.getText().toString() + "'";
 		screen.setText("");
 		try {
@@ -535,6 +535,7 @@ public class GUI_SystemInterface {
 			rs = st.executeQuery(query);
 			screen.setFont(new Font("Monospaced", Font.PLAIN, 16));
 			while(rs.next()) {
+				if ((rs.getString(15).equals("1") && rs.getString(16).equals("1") && docClearance_Level.getText().toString().equals("2")) || (rs.getString(15).equals("1") && rs.getString(16).equals("0") && docClearance_Level.getText().toString().equals("1")) || (rs.getString(15).equals("0") && rs.getString(16).equals("0"))) {
 				screen.append(
 						  "\n*********************************************************************\n*                            PATIENT REPORT:                        *\n*********************************************************************"
 						+ "\n*  Patient ID                       :   " + rs.getInt(1)
@@ -549,11 +550,20 @@ public class GUI_SystemInterface {
 						+ "\n*  Conditions                       :   " + rs.getString(10)
 						+ "\n*  Treatments                       :   " + rs.getString(11)
 						+ "\n*  History of Self-Harm/Violence?   :   " + rs.getString(12)
-						+ "\n*  Date Registered                  :   " + rs.getString(14)
-						+ "\n*  Last Consultation                :   " + rs.getString(15)
+						+ "\n*  Date Registered                  :   " + rs.getString(13)
+						+ "\n*  Last Consultation                :   " + rs.getString(14)
 						+ "\n*********************************************************************"
 						);
-			}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "You Are not Allowed To View Generate A Report For This Patient!", "ALERT", JOptionPane.ERROR_MESSAGE);
+					screen.setText("");
+					screen.setFont(new Font("Monospaced", Font.PLAIN, 19));
+					generateButton.setEnabled(false);
+					contactButton.setEnabled(false);
+					patientID.setText("");
+				}
+			}	
 		}
 		catch(SQLException e) {
 			System.err.println(e);
